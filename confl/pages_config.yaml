@@ -1,0 +1,12 @@
+space_key: "RTKDT"
+stg_hdp:
+  title: '[TEST] SW_STG.MTS_SERVICE_SW_TSRETAIL (Услуги МТС из Eдиного Окна)'
+  parent_id_stg_schema: '2422782607'
+  schema_name: 'SW_STG'
+  table_name: 'MTS_SERVICE_SW_TSRETAIL'
+  table_desc: 'Услуги МТС из Eдиного Окна'
+  system_source: '//msk.mts.ru/MSK/Tech/SFO/reward-new-DDMMYYYY.csv' # topic_name
+  update_schedule: ''
+  history_depth: '2023-05-01'
+stg_gp:
+

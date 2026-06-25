@@ -1,0 +1,40 @@
+<h1>Общая информация</h1>
+<table class="wrapped"><colgroup><col/><col/></colgroup><tbody>
+    <tr><th class="highlight-#f4f5f7" data-highlight-colour="#f4f5f7" style="text-align: left;vertical-align: top;"><strong>Наименование таблицы</strong></th><td style="text-align: left;vertical-align: top;">{{ schema_name }}.{{ table_name }}</td></tr>
+    <tr><th class="highlight-#f4f5f7" data-highlight-colour="#f4f5f7" style="text-align: left;vertical-align: top;"><strong>Описание</strong></th><td style="text-align: left;vertical-align: top;"><span style="color: rgb(23,43,77);">{{ table_desc }}</span></td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><p><strong title="">Система источник</strong></p></th><td style="text-align: left;vertical-align: top;"><span style="color: rgb(23,43,77);">{{ system_source }}</span></td></tr>
+    <tr><th class="highlight-#f4f5f7" data-highlight-colour="#f4f5f7" style="text-align: left;vertical-align: top;"><strong>Процедура/Процесс загрузки</strong></th><td><div class="content-wrapper"><p><br/></p></div></td></tr>
+    <tr><th class="highlight-#f4f5f7" data-highlight-colour="#f4f5f7" style="text-align: left;vertical-align: top;"><strong>Ссылка на требование</strong></th><td style="text-align: left;vertical-align: top;"><div class="content-wrapper"><p><br/></p></div></td></tr>
+    <tr><th class="highlight-#f4f5f7" data-highlight-colour="#f4f5f7" style="text-align: left;vertical-align: top;"><strong>Регламент обновления</strong></th><td style="text-align: left;vertical-align: top;"><span style="color: rgb(23,43,77);">{{ update_schedule }}</span></td></tr>
+    <tr><th class="highlight-#f4f5f7" data-highlight-colour="#f4f5f7" style="text-align: left;vertical-align: top;"><strong>Глубина хранения </strong></th><td style="text-align: left;vertical-align: top;">{{ history_depth }}</td></tr>
+    <tr><th style="text-align: left;vertical-align: top;"><strong>Cсылка на задачу в Jira</strong></th><td style="text-align: left;vertical-align: top;"><div class="content-wrapper"><p><br/></p></div></td></tr>
+</tbody></table>
+<h1>Структура таблицы</h1>
+<ac:structured-macro ac:macro-id="ae1738cf-c9e4-4937-a672-10383b6827ac" ac:name="expand" ac:schema-version="1"><ac:parameter ac:name="title">{{ schema_name }}.{{ table_name }}</ac:parameter><ac:rich-text-body>
+    <table class="wrapped relative-table" style="width: 83.9055%;"><colgroup><col style="width: 4.52797%;"/><col style="width: 11.9712%;"/><col style="width: 21.0272%;"/><col style="width: 23.012%;"/><col style="width: 5.89257%;"/><col style="width: 21.0272%;"/><col style="width: 12.5295%;"/></colgroup><tbody><tr><th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Схема данных</th><th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Название таблицы</th><th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Название поля</th><th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Описание поля</th><th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Тип данных</th><th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Формула расчета</th><th scope="col" style="text-align: center;">Пример данных</th></tr>
+    {% for column_name, description, data_type, formula, example in attrs %}
+    <tr><td>{{ schema_name }}</td><td>{{ table_name }}</td><td>{{ column_name }}</td><td>{{ description }}</td><td>{{ data_type }}</td><td>{{ formula }}</td><td>{{ example }}</td></tr>
+    {% endfor %}
+    </tbody></table></ac:rich-text-body></ac:structured-macro><p><br/></p>
+<h2>Пример данных</h2>
+<ac:structured-macro ac:macro-id="169ea31c-1a14-4e6e-9d28-9f86a9a4a446" ac:name="code" ac:schema-version="1">
+    <ac:parameter ac:name="language">java</ac:parameter>
+    <ac:parameter ac:name="title">sample.json</ac:parameter>
+    <ac:parameter ac:name="collapse">true</ac:parameter>
+    <ac:plain-text-body><![CDATA[{
+        "pay_month":1685577600000,
+        "msisdn":"79152483867",
+       "service_name":"Защитник+",
+        "dt_from_rtk":1678579200000,
+        "source_podkl":"1C",
+        "valid_from":1678579200000,
+        "valid_to":1678579200000,
+        "trial_valid_from":1678579200000,
+        "rtk_charge_period":1686960000000,
+        "family_members_cnt": 0,
+        "qty_pays":17,
+        "sum_for_rtk":42.5,
+        "proccessed_dt":null
+    }]]>
+    </ac:plain-text-body>
+</ac:structured-macro><p><br/></p>
