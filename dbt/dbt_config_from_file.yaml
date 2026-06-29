@@ -1,0 +1,43 @@
+stg_table_name: MTS_SERVICE_SW_TSRETAIL
+attr_desc_path: /src/attr_desc/attr_desc.csv
+hash_keys:
+  mts_service_sw_hash_key: ['interaction_id', 'scenario_id', 'msisdn']
+  mts_service_sw_prop_hash_key: ['interaction_started_dt', 'scenario_reason']
+
+raw_stage: raw_mts_service_sw_tsretail
+stage: v_mts_service_sw_tsretail_tt_hsat_hub
+raw_vault:
+  hubs:
+    hub_voice_tech_services:
+      source_model: v_mts_service_sw_tsretail_tt_hsat_hub
+      src_pk: mts_service_sw_hash_key
+      distributed_by: mts_service_sw_hash_key
+      src_nk: ['interaction_id', 'scenario_id', 'msisdn']
+      src_ldts: load_date
+      src_source: source
+      batch_target_tbl: dv.hub_voice_tech_services
+  hsats:
+    hsat_voice_tech_services:
+      source_model: v_mts_service_sw_tsretail_tt_hsat_hub
+      src_pk: mts_service_sw_hash_key
+      src_hashdiff: voice_tech_prop_hash_key
+      distributed_by: mts_service_sw_hash_key
+      src_payload: ['asdf', 'asdfbdb']
+      src_eff: source_proccessed_date
+      src_ldts: load_date
+      src_source: source
+      batch_target_tbl: dv.hsat_voice_tech_services
+base_dm:
+  mart_voice_tech_services:
+      source_model_hub: hub_voice_tech_services
+      source_model_hsat: hsat_voice_tech_services
+      src_pk: mts_service_sw_hash_key
+      distributed_by: mts_service_sw_hash_key
+      unique_key: mts_service_sw_hash_key
+      src_payload: ['asdf', 'asdfbdb']
+      src_nk: ['interaction_id', 'scenario_id', 'msisdn']
+      src_eff: source_proccessed_date
+export_part2ch:
+    tgt_table_name: voice_tech_services
+    source_model: mart_voice_tech_services
+    partitioning_key_date: valid_from

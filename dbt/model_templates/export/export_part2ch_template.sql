@@ -8,21 +8,16 @@
     )
 }}
  
-{#
-  curdate передаётся из CLI, например:
-  dbt run -s mart_voice_tech_services export_part2ch_voice_tech_services --vars '{curdate: "2026-03-20 12:00:00"}'
-#}
 {% set curdate = var('curdate', none) %}
- 
 WITH changed_parts AS (
     SELECT
-        'voice_tech_services' as table_name,
-        to_char(m.CREATED_DATE, 'YYYYMM') as part_period_name,
-        cast(to_char(m.CREATED_DATE, 'YYYYMM') as int4) as part_id,
+        '<tgt_table_name>' as table_name,
+        to_char(m.<partitioning_key_date>, 'YYYYMM') as part_period_name,
+        cast(to_char(m.<partitioning_key_date>, 'YYYYMM') as int4) as part_id,
         'auto' as type_load
-    FROM {{ ref('mart_voice_tech_services') }} m
+    FROM {{ ref('<source_model>') }} m
     {% if curdate is not none %}
-    WHERE m.modified_date >= cast('{{ curdate }}' as timestamp)
+    WHERE m.load_date >= cast('{{ curdate }}' as timestamp)
     {% endif %}
     GROUP BY 1,2,3,4
 )
