@@ -1,42 +1,42 @@
-stg_table_name: MTS_SERVICE_SW_TSRETAIL
+stg_table_name: CARD_ISSUANCE_REPORT
 hash_keys:
-  mts_service_sw_hash_key: ['interaction_id', 'scenario_id', 'msisdn']
-  mts_service_sw_prop_hash_key: ['interaction_started_dt', 'scenario_reason']
+  card_issuance_hash_key: ['card_barcode', 'contract_number', 'contract_date']
+  card_issuance_sw_prop_hash_key: ['activation_date', 'transaction', 'card_type']
 
-raw_stage_model_name: raw_mts_service_sw_tsretail
-stage_model_name: v_mts_service_sw_tsretail_tt_hsat_hub
+raw_stage_model_name: raw_card_issuance_tsretail
+stage_model_name: v_card_issuance_tt_hsat_hub
 raw_vault:
   hubs:
-    - model_name: hub_voice_tech_services
-      source_model: v_mts_service_sw_tsretail_tt_hsat_hub
-      src_pk: mts_service_sw_hash_key
-      distributed_by: mts_service_sw_hash_key
-      src_nk: ['interaction_id', 'scenario_id', 'msisdn']
-      src_ldts: load_datess
-      src_source: source
-      batch_target_tbl: dv.hub_voice_tech_services
-  hsats:
-    - model_name: hsat_voice_tech_services
-      source_model: v_mts_service_sw_tsretail_tt_hsat_hub
-      src_pk: mts_service_sw_hash_key
-      src_hashdiff: voice_tech_prop_hash_key
-      distributed_by: mts_service_sw_hash_key
-      src_payload: ['asdf', 'asdfbdb']
-      src_eff: source_proccessed_date
+    - model_name: hub_card_issuance
+      source_model: v_card_issuance_hsat_hub
+      src_pk: card_issuance_hash_key
+      distributed_by: card_issuance_hash_key
+      src_nk: ['card_barcode', 'contract_number', 'contract_date']
       src_ldts: load_date
       src_source: source
-      batch_target_tbl: dv.hsat_voice_tech_services
+      batch_target_tbl: dv.hub_card_issuance
+  hsats:
+    - model_name: hsat_card_issuance
+      source_model: v_card_issuance_tt_hsat_hub
+      src_pk: card_issuance_hash_key
+      src_hashdiff: card_issuance_prop_hash_key
+      distributed_by: card_issuance_hash_key
+      src_payload: ['activation_date', 'transaction', 'card_type']
+      src_eff: load_date
+      src_ldts: load_date
+      src_source: source
+      batch_target_tbl: dv.hsat_card_issuance
 base_dm:
-  model_name: mart_voice_tech_services
-  source_model_hub: hub_voice_tech_services
-  source_model_hsat: hsat_voice_tech_services
-  src_pk: mts_service_sw_hash_key
-  distributed_by: mts_service_sw_hash_key
-  unique_key: mts_service_sw_hash_key
-  src_payload: ['asdf', 'asdfbdb']
-  src_nk: ['interaction_id', 'scenario_id', 'msisdn']
-  src_eff: source_proccessed_datess
+  model_name: mart_card_issuance
+  source_model_hub: hub_card_issuance
+  source_model_hsat: hsat_card_issuance
+  src_pk: card_issuance_hash_key
+  distributed_by: card_issuance_hash_key
+  unique_key: card_issuance_hash_key
+  src_payload: ['activation_date', 'transaction', 'card_type']
+  src_nk: ['card_barcode', 'contract_number', 'contract_date']
+  src_eff: load_date
 export_part2ch:
-  tgt_table_name: voice_tech_services
-  source_model: mart_voice_tech_services
-  partitioning_key_date: valid_from
+  tgt_table_name: card_issuance
+  source_model: mart_card_issuance
+  partitioning_key_date: contract_date

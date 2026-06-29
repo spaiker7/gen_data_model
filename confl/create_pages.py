@@ -162,8 +162,8 @@ def main():
         raw_stage_model_spec=raw_stage_model_spec,
         stage_model_name=stage_model_name,
         stage_model=stage_model,
-        raw_stage_model_spec_name=raw_stage_model_spec_name,
-        raw_stage_model_spec=raw_stage_model_spec
+        stage_model_spec_name=raw_stage_model_spec_name,
+        stage_model_spec=raw_stage_model_spec
     )      
     confluence.create_page(
         space=pages_config["space_key"],

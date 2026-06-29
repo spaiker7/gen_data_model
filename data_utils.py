@@ -7,7 +7,7 @@ import chardet
 import pandas as pd
 
 class DataFrameFromFile:
-    def __init__(self, samples_dir='stream/samples', json_parse_sep='.', csv_sep=';', sheetname="Лист1"):
+    def __init__(self, samples_dir='stream/samples', json_parse_sep='.', csv_sep=';', sheet_name=0):
         super().__init__()
 
         samples_dir = Path(samples_dir)
@@ -25,7 +25,7 @@ class DataFrameFromFile:
         if self.ext == '.csv':
             self.pd = pd.read_csv(self.filepath, sep=csv_sep, encoding=self.encoding, low_memory=False)
         elif self.ext == '.xlsx':
-            self.pd = pd.read_excel(self.filepath, sheet_name=sheetname)
+            self.pd = pd.read_excel(self.filepath, sheet_name=sheet_name)
         elif self.ext == '.json':
             with open(self.filepath, 'r') as f:
                 data = json.load(f)
