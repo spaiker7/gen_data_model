@@ -1,0 +1,24 @@
+tinyint: # [-128 : 127]
+  hadoop: tinyint 
+  greenplum: smallint
+  clickhouse: Int8
+int: # [-2147483648 : 2147483647]
+  hadoop: int
+  greenplum: int4
+  clickhouse: Int32
+bigint: # [-9223372036854775808 : 9223372036854775807]
+  hadoop: bigint
+  greenplum: int8
+  clickhouse: Int64
+timestamp:
+  hadoop: timestamp
+  greenplum: timestamp
+  clickhouse: DateTime
+string:
+  hadoop: string
+  greenplum: text
+  clickhouse: String
+boolean:
+  hadoop: boolean
+  greenplum: boolean
+  clickhouse: Bool

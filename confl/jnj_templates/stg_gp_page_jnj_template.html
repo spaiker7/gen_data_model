@@ -1,0 +1,28 @@
+<h1>Общая информация</h1>
+<table class="wrapped"><colgroup><col/><col/></colgroup><tbody>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Наименование таблицы</strong></th><td style="text-align: left;vertical-align: top;">{{ schema_name }}.{{ table_name }}</td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Описание</strong></th><td style="text-align: left;vertical-align: top;"><span style="color: rgb(23,43,77);">{{ table_desc }}</span></td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><p><strong title="">Система источник</strong></p></th><td style="text-align: left;vertical-align: top;"><span style="color: rgb(23,43,77);">{{ system_source }}</span></td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Процедура/Процесс загрузки</strong></th><td><div class="content-wrapper"><p><br/></p></div></td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Ссылка на требование</strong></th><td style="text-align: left;vertical-align: top;"><div class="content-wrapper"><p><br/></p></div></td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Регламент обновления</strong></th><td style="text-align: left;vertical-align: top;"><span style="color: rgb(23,43,77);">{{ update_schedule }}</span></td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Глубина хранения</strong></th><td style="text-align: left;vertical-align: top;">{{ history_depth }}</td></tr>
+    <tr><th style="text-align: left;vertical-align: top;"><strong>Jira</strong></th><td style="text-align: left;vertical-align: top;"><div class="content-wrapper"><p><br/></p></div></td></tr>
+</tbody></table>
+<h1>Структура таблицы</h1>
+<ac:structured-macro ac:macro-id="ae1738cf-c9e4-4937-a672-10383b6827ac" ac:name="expand" ac:schema-version="1"><ac:parameter ac:name="title">{{ schema_name }}.{{ table_name }}</ac:parameter><ac:rich-text-body>
+    <table class="wrapped relative-table" style="width: 85%;"><colgroup><col style="width: 4.5%;"/><col style="width: 12%;"/><col style="width: 21%;"/><col style="width: 23%;"/><col style="width: 6%;"/><col style="width: 18%;"/><col style="width: 6%;"/><col style="width: 9.5%;"/>
+    </colgroup><tbody><tr>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Схема данных</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Название таблицы</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Название поля</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Описание поля</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Тип данных</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Формула расчета</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Ключ</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Пример данных</th>
+    </tr>
+    {% for column_name, description, data_type, formula, example in attrs %}
+    <tr><td>{{ schema_name }}</td><td>{{ table_name }}</td><td>{{ column_name }}</td><td>{{ description }}</td><td>{{ data_type }}</td><td>{{ formula }}</td><td>{{ example }}</td></tr>
+    {% endfor %}
+    </tbody></table></ac:rich-text-body></ac:structured-macro><p><br/></p>

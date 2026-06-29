@@ -1,0 +1,215 @@
+version: 1
+models:
+  - name: v_mts_service_sw_tsretail_tt_hsat_hub
+    description: |
+      Промежуточное представление, где создаются хэш-ключи для хаба и сателлита.
+      source_model: raw_mts_service_sw_tsretail
+     columns:
+      - name: mts_service_sw_hash_key
+        description: Хэш-ключ записи сценария взаимодействия ЕО
+      - name: mts_service_sw_prop_hash_key
+        description: Хэш-ключ свойств сценария взаимодействия ЕО
+      - description: Дата отчета (выгрузки .csv)
+        name: report_date
+      - description: идентификатор (hash) взаимодействия с абонентом
+        name: interaction_id
+      - description: дата и время начала взаимодействия
+        name: interaction_started_dt
+      - description: дата и время окончания взаимодействия
+        name: interaction_ended_dt
+      - description: причина обращения абонента
+        name: scenario_reason
+      - description: идентификатор (hash) сценария
+        name: scenario_id
+      - description: тип сценария ео (единое окно)
+        name: scenario_type
+      - description: дата и время начала сценария
+        name: scenario_started_dt
+      - description: дата и время помещения сценария в корзину на подтверждение
+        name: scenario_prepared_dt
+      - description: дата и время окончания сценария
+        name: scenario_ended_dt
+      - description: признак завершенности сценария (-1 – завершен неуспешно, 1 – завершен          успешно, 0 – завершен нейтрально)
+        name: scenario_completion_tonality
+      - description: результат работы сценария – отказ или успех
+        name: scenario_result
+      - description: идентификатор сервисного запроса в crm
+        name: crm_request_id
+      - description: тип внешней системы, выполняющей заявку в рамках сценария
+        name: system_type
+      - description: идентификатор экземпляра внешней системы (на первом этапе foris)
+        name: system_instance_id
+      - description: номер заявки во внешней системе
+        name: system_request_id
+      - description: дата и время создания заявки во внешней системе
+        name: system_request_created_dt
+      - description: дата и время закрытия заявки во внешней системе
+        name: system_request_closed_dt
+      - description: логин сотрудника
+        name: login
+      - description: идентификатор офиса продаж (оп) 1с
+        name: office_code
+      - description: идентификатор абонента в foris или в siebel
+        name: customer_id
+      - description: номер телефона абонента
+        name: msisdn
+      - description: тип абонента
+        name: customer_type
+      - description: маркетинговая категория
+        name: marketing_category
+      - description: тип связи (категория по) (mob – мобильная телефония, fix – фиксированная          телефония)
+        name: network_type
+      - description: 0 – оффлайн операция (заявка через siebel в госз); 1 – онлайн операция
+        name: is_online
+      - description: признак групповой операции (0 – одиночная операция, 1 – групповая операция)
+        name: is_group
+      - description: признак платной операции (0 – нет признака платной операции, 1 – признак          платной операций)
+        name: payed
+      - description: 'признак фрода (0 – нет признаков мошеннических действий, 1 – есть          признаки мошеннических действий) '
+        name: fraud
+      - description: тарифный план (тп) до смены
+        name: tariff_old
+      - description: тарифный план (тп) после смены
+        name: tariff_new
+      - description: iccid старой sim карты до замены
+        name: old_iccid
+      - description: iccid новой sim карты в случае замены
+        name: new_iccid
+      - description: предложение rtm (1 – сотрудник использовал предложение rtm, 0 – не          использовал)
+        name: rtm_used
+      - description: дата и время продажи в терминале
+        name: terminal_dev_sale_date
+      - description: действие с услугой
+        name: action
+      - description: код услуги
+        name: service_code
+      - description: тип операции
+        name: operation_type
+      - description: подтема сервисного запроса
+        name: subtheme
+      - description: статус двойной оферты (0 – оферта не предлагалась, 1 - оферта предложена,          абонент отказался, 2 - оферта предложена, абонент согласился)
+        name: offer_status
+      - description: тип подтверждения
+        name: confirmation_type
+      - description: причина отказа при замене карты
+        name: offer_rejection_reason
+      - description: описание отказа при замене карты
+        name: bio_rejection_reason
+      - description: результат использования предложения ртм
+        name: rtm_offer_result
+      - description: номер счёта
+        name: account_number
+      - description: действие с оборудованием (фб)
+        name: equip_operation
+      - description: артикул оборудования (фб)
+        name: equip_articul
+      - description: серийный номер оборудования (фб)
+        name: equip_serial_number
+      - description: статус постановки на учет в 1с фб
+        name: equip_1c_status
+      - description: метод платежа
+        name: payment_method
+      - description: новый номер телефона
+        name: new_msisdn
+      - description: категория номера
+        name: salability_category
+      - description: длительность сценария
+        name: duration
+      - description: длительность подтверждения
+        name: confirmation_duration
+      - description: длительность взаимодействия
+        name: interaction_duration
+      - description: статус распознования документов
+        name: recognition_status
+      - description: статус разпознавания получателя
+        name: receiver_recognition_status
+      - description: тип новой sim-карты
+        name: new_sim_type
+      - description: bulk id отмены
+        name: bulk_cancellated_msisdn
+      - description: red/none
+        name: convergent_type
+      - description: факт идентификации по био
+        name: bio_identification
+      - description: '% сличения фото'
+        name: identification_percentage
+      - description: количество попыток идентификации
+        name: identification_count
+      - description: id абонента в системе mdm мтс
+        name: mdm_guid_id
+      - description: факт сбора био
+        name: bio_status
+      - description: факт согласия на сбор данных
+        name: bio_approval
+      - description: родительский идентификатор (hash) сценария
+        name: parent_scenario_id
+      - description: признак проставления адреса для нового клиента
+        name: address_by_parts_for_new_client
+      - description: длительность покупки
+        name: sales_duration
+      - description: статус сбора фио
+        name: bio_ok
+      - description: признак использования мтс банка
+        name: mtsbank_used
+      - description: результат предложения мтс банка
+        name: mtsbank_offer_result
+      - description: добавленные услуги
+        name: added_services
+      - description: процесс mnp/сценарий
+        name: process
+      - description: код связи со сценарием
+        name: link_scenario_code
+      - description: статус сценария из связи
+        name: scenario_status_from_link
+      - description: тип номера
+        name: number_type
+      - description: стоимость выбранного номера
+        name: number_price
+      - description: стоимость индивидуального выбора номера
+        name: individual_select_number_price
+      - description: кол-во cз на корректировки было создано в рамках выполнения сценария
+        name: adjustment_service_requests_count
+      - description: резидент/ не резидент
+        name: customer_legal_category
+      - description: резидент/ не резидент
+        name: receiver_legal_category
+      - description: вид подписи
+        name: signing_type
+      - description: роль доступа в ео
+        name: user_role
+      - description: признак выбора номера (для определения чистых от спама номеров)
+        name: quality_category
+      - description: количество персональных рекомендаций
+        name: rtm_count
+      - description: количество принятых персональных рекомендаций
+        name: rtm_accepted_count
+      - description: номер портации
+        name: porting_number
+      - description: номер заказа на портацию
+        name: porting_order_number
+      - description: оператор номера обращения
+        name: network_operator_name
+      - description: дата портации номера
+        name: date_of_portation
+      - description: регион портации номера
+        name: portation_region
+      - description: номер заказа EP
+        name: ep_order_id
+      - description: признак создания заявки по выдаче банковской карты клиентам
+        name: virtual_bank_card
+      - description: условное название конфигураций
+        name: tariff_plan_alias_name
+      - description: размер абонентской платы базовый
+        name: regular_price_amount_base
+      - description: размер абонентской платы итоговый
+        name: regular_price_amount_result
+      - description: валюта абонетской платы
+        name: regular_price_amount_currency
+      - description: длительность периода абонентской платы
+        name: regular_price_charging_interval_duration
+      - description: единица измерения периода абонетской платы
+        name: regular_price_charging_interval_unit
+      - description: источник данных
+        name: source
+      - description: дата и время вставки записи
+        name: load_date

@@ -1,0 +1,34 @@
+[
+    {
+        "pay_month":1685577600000,
+        "msisdn":"79152483867",
+        "dt_from_rtk":1678579200000,
+        "source_podkl":"1C",
+        "dt_from_defender":1678579200000,
+        "dt_from_trial_7":1678579200000,
+        "dt_from_trial_30":null,
+        "rtk_charge_period":{
+            "a":{"c": 5},
+            "b":2
+        },
+        "qty_pays":17,
+        "sum_for_rtk":42.5,
+        "proccessed_dt":null
+    },
+    {
+        "pay_month":1685577600000,
+        "msisdn":"79152483867",
+        "dt_from_rtk":1678579200000,
+        "source_podkl":"1C",
+        "dt_from_defender":1678579200000,
+        "dt_from_trial_7":1678579200000,
+        "dt_from_trial_30":null,
+        "rtk_charge_period":{
+            "a":{"c": 1},
+            "b":3
+        },
+        "qty_pays":17,
+        "sum_for_rtk":42.5,
+        "proccessed_dt":null
+    }
+]

@@ -1,23 +1,20 @@
 import yaml
+import json
 import re
 from datetime import datetime
 from pathlib import Path
 import chardet
-
 import pandas as pd
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
-from pyspark.sql.types import *
 
 class DataFrameFromFile:
-    def __init__(self, samples_dir='stream/samples', sep=';', sheetname="Лист1"):
+    def __init__(self, samples_dir='stream/samples', json_parse_sep='.', csv_sep=';', sheetname="Лист1"):
         super().__init__()
 
         samples_dir = Path(samples_dir)
-        filepath = next((x for x in samples_dir.iterdir() if x.is_file()), None)
-        self.ext = filepath.suffix.lower()
+        self.filepath = next((x for x in samples_dir.iterdir() if x.is_file()), None)
+        self.ext = self.filepath.suffix.lower()
 
-        with open(filepath, 'rb') as f:
+        with open(self.filepath, 'rb') as f:
             raw_data = f.read()
             result = chardet.detect(raw_data)
             self.encoding = result['encoding']
@@ -26,15 +23,28 @@ class DataFrameFromFile:
             self.encoding = 'utf-8'
 
         if self.ext == '.csv':
-            self.pd = pd.read_csv(filepath, sep=sep, encoding=self.encoding, low_memory=False)
+            self.pd = pd.read_csv(self.filepath, sep=csv_sep, encoding=self.encoding, low_memory=False)
         elif self.ext == '.xlsx':
-            self.pd = pd.read_excel(filepath, sheet_name=sheetname)
+            self.pd = pd.read_excel(self.filepath, sheet_name=sheetname)
+        elif self.ext == '.json':
+            with open(self.filepath, 'r') as f:
+                data = json.load(f)
+            self.pd = pd.json_normalize(data, sep=json_parse_sep)
         else:
             raise ValueError(f"Unsupported file extension: {self.ext}")
-
-    def get_attrs():
-        pass
     
+def mask_sensitive_info(sample):
+
+    phone_pattern = r'^\d{11}$'
+    if re.match(phone_pattern, sample):
+        masked_number = sample[:-3] + '***'
+        return masked_number
+    else:
+        return sample
+
+def normalize_col_name(col):
+    cleaned = re.sub(r'[\r\n\t\s\u00A0]+', '_', col.strip().upper())
+    return cleaned
 
 def get_duplicates_by_key(df, key: list, show_counts=False):
     duplicate_keys = df.groupby(key).size().reset_index(name='count')
@@ -47,48 +57,7 @@ def get_max_attr_lengths(df) -> dict:
     lengths = df.astype(str).apply(lambda col: col.str.len().max())
     return lengths.to_dict()
 
-def create_yaml_spec_from_xlsx(xlsx_file_path):
-    df = pd.read_excel(xlsx_file_path)
-    columns = df[['name', 'description']].to_dict(orient='records')
-
-    yaml_data = {'columns': columns}
-
-    with open('raw_schema.yaml', 'w', encoding='utf-8') as f:
-        yaml.dump(yaml_data, f, default_flow_style=False, allow_unicode=True)
-
-def get_hsat_hub_hashdiff_cols_dbt_spec(xlsx_file_path, pk_to_exclude=['interaction_id', 'scenario_id', 'scenario_type']):
-    df = pd.read_excel(xlsx_file_path)
-    column_names = df['name'].tolist()
-    # exclude tech cols
-    pk_to_exclude.extend(['p_date', 'load_date', 'batch_id', 'doc_id', 'source'])
-    column_names = [col for col in column_names if col not in pk_to_exclude]
-    
-    yaml_data = {'columns': column_names}
-    
-    with open('hsat_hashdiff_cols.yaml', 'w', encoding='utf-8') as f:
-        yaml.dump(yaml_data, f, default_flow_style=False, allow_unicode=True)
-
-def create_yaml_spec_hub(xlsx_file_path, pk=['interaction_id', 'scenario_id', 'scenario_type', 'msisdn', 'bulk_cancellated_msisdn', 'new_iccid', 'service_code', 'equip_operation', 'action']):
-    df = pd.read_excel(xlsx_file_path)
-    columns = df[['name', 'description']].to_dict(orient='records')
-    pk.extend(['load_date', 'source'])
-    filtered_columns = [col for col in columns if col['name'] in pk]
-
-    yaml_data = {'columns': filtered_columns}
-
-    with open('hub_schema.yaml', 'w', encoding='utf-8') as f:
-        yaml.dump(yaml_data, f, default_flow_style=False, allow_unicode=True)
-
-
-
-
-def treat_as_string(col_name):
-
-    indicators = ['msisdn', 'phone', 'tel', 'mobile', 'cell', 'id', 'acc', 'number']
-    col_name_lower = col_name.lower()
-    return any(indicator in col_name_lower for indicator in indicators)
-
-def is_timestamp_column(sample_values):
+def is_timestamp_column(sample_values, date_as_timestamp=True):
 
     if len(sample_values) == 0:
         return False
@@ -99,6 +68,9 @@ def is_timestamp_column(sample_values):
         r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}',
         r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}'
     ]
+    
+    if date_as_timestamp:
+        timestamp_patterns.append(r'\d{4}-\d{2}-\d{2}')
     
     timestamp_count = 0
     total_count = len(sample_values)
@@ -149,8 +121,14 @@ def get_integer_range(sample_values):
     except (ValueError, TypeError):
         return None, None
 
-def infer_dtype(col_name, sample_values):
-    if treat_as_string(col_name):
+def infer_dtype(col_name, 
+                sample_values,
+                # treat col as string
+                str_indicators = ['msisdn', 'phone', 'tel', 'mobile',
+                                   'cell', 'id', 'acc', 'number']):
+
+    
+    if any(indicator in col_name.lower() for indicator in str_indicators):
         return 'string'
     
     if is_timestamp_column(sample_values):
@@ -186,16 +164,3 @@ def infer_dtype(col_name, sample_values):
             pass
     
     return 'string'
-
-def mask_sensitive_info(sample):
-
-    phone_pattern = r'^\d{11}$'
-    if re.match(phone_pattern, sample):
-        masked_number = sample[:-3] + '***'
-        return masked_number
-    else:
-        return sample
-
-def normalize(col):
-    cleaned = re.sub(r'[\r\n\t\s\u00A0]+', '_', col.strip().upper())
-    return cleaned

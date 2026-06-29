@@ -1,0 +1,17 @@
+stg_table_name: MTS_SERVICE_SW_TSRETAIL
+attr_desc_path: /src/attr_desc/attr_desc.csv
+hash_keys:
+  mts_service_sw_hash_key: ['interaction_id', 'scenario_id', 'msisdn']
+  mts_service_sw_prop_hash_key: ['interaction_started_dt', 'scenario_reason']
+raw_stage: raw_mts_service_sw_tsretail
+stage: v_mts_service_sw_tsretail_tt_hsat_hub
+raw_vault:
+  hubs:
+    hub_voice_tech_services:
+      source_model: v_mts_service_sw_tsretail_tt_hsat_hub
+      src_pk: mts_service_sw_hash_key
+      distributed_by: mts_service_sw_hash_key
+      src_nk:
+      src_ldts:
+      src_source:
+      batch_target_tbl: dv.hub_voice_tech_services

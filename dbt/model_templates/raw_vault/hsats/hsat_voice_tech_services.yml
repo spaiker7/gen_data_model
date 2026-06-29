@@ -1,0 +1,35 @@
+version: 1
+models:
+  - name: hsat_voice_tech_services
+    description: |
+      Сателлит с историей изменений подключения продуктов голосовой экосистемы для каждого абонента. Новая запись создаётся при изменении любого из атрибутов входящего в состав voice_tech_prop_hash_key
+      source_model: v_voice_tech_services_tt_hub_hsat
+    columns:
+      - name: voice_tech_hash_key
+        description: "хэш ключа факта подключения подписки voicetech"
+      - name: voice_tech_prop_hash_key
+        description: "хэш атрибутов свойств факта подключения подписки voicetech"
+      - name: pay_month
+        description: "период оплаты (начало месяца)"
+      - name: sale_date
+        description: "дата продажи"
+      - name: source_conn
+        description: "источник подключения"
+      - name: trial_valid_from
+        description: "дата подключения пробного периода"
+      - name: valid_to
+        description: "дата окончания действия версии"
+      - name: charge_date
+        description: "дата продления подписки"
+      - name: days_paid
+        description: "количество оплаченных дней (после пробного периода)"
+      - name: payment_amount
+        description: "сумма платежа (после пробного периода)"
+      - name: family_members_count
+        description: "количество добавленных пользователей в семейную группу"
+      - name: source_proccessed_date
+        description: "дата обработки батча на источнике"
+      - name: load_date
+        description: "дата и время вставки записи"
+      - name: source
+        description: "источник данных"
