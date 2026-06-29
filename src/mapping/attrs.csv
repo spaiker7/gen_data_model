@@ -1,0 +1,14 @@
+name,src_name,description
+pay_month,pay_month,Месяц оплаты
+msisdn,msisdn,Номер телефона
+dt_from_rtk,dt_from_rtk,Дата оплаты
+source_podkl,source_podkl,Источник подключения
+dt_from_defender,dt_from_defender,Дата подключения
+dt_from_trial_7,dt_from_trial_7,Дата начала пробного периода 7 дней
+dt_from_trial_30,dt_from_trial_30,Дата начала пробного периода 30 дней
+rtk_charge_period,rtk_charge_period,Дата продления подписки
+a,a,а
+b,a,б
+qty_pays,qty_pays,Количество дней оплачено
+sum_for_rtk,sum_for_rtk,Сумма оплаты
+proccessed_dt,proccessed_dt,Дата обработки на источнике

@@ -18,3 +18,50 @@ stg_gp:
   table_desc: 'Услуги МТС из Eдиного Окна'
   update_schedule: ''
   history_depth: '2023-05-01'
+  raw_stage_model_name: raw_mts_service_sw_tsretail
+  stage_model_name: v_mts_service_sw_tsretail_tt_hsat_hub
+raw_vault:
+  hubs:
+    - model_name: hub_voice_tech_services
+      title: ''
+      parent_id_page: '2182845903' #  2422782607
+      schema_name: ''
+      table_name: ''
+      table_desc: ''
+      update_schedule: ''
+      history_depth: ''
+      source_model: v_mts_service_sw_tsretail_tt_hsat_hub
+      src_pk: mts_service_sw_hash_key
+      src_nk: ['interaction_id', 'scenario_id', 'msisdn']
+  hsats:
+    hsat_voice_tech_services:
+      title: ''
+      parent_id_page: '2182845903' #  2422782607
+      schema_name: ''
+      table_name: ''
+      table_desc: ''
+      update_schedule: ''
+      history_depth: ''
+      source_model: v_mts_service_sw_tsretail_tt_hsat_hub
+      src_pk: mts_service_sw_hash_key
+      src_hashdiff: voice_tech_prop_hash_key
+      src_payload: ['asdf', 'asdfbdb']
+base_dm:
+  mart_voice_tech_services:
+      title: ''
+      parent_id_page: '2182845903' #  2422782607
+      schema_name: ''
+      table_name: ''
+      table_desc: ''
+      update_schedule: ''
+      history_depth: ''
+      source_model_hub: hub_voice_tech_services
+      source_model_hsat: hsat_voice_tech_services
+      src_pk: mts_service_sw_hash_key
+      distributed_by: mts_service_sw_hash_key
+      unique_key: mts_service_sw_hash_key
+      src_payload: ['asdf', 'asdfbdb']
+      src_nk: ['interaction_id', 'scenario_id', 'msisdn']
+      tgt_table_name: voice_tech_services
+      source_model: mart_voice_tech_services
+      partitioning_key_date: valid_from

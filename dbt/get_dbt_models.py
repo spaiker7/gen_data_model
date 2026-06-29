@@ -207,52 +207,51 @@ if __name__ == "__main__":
 
     gen_raw_stage_model(
         stg_table_name=dbt_config['stg_table_name'],
-        save_path=f'dbt/models/{dbt_config['raw_stage']}.sql'
+        save_path=f'dbt/models/{dbt_config['raw_stage_model_name']}.sql'
         )
     
     gen_stage_model(
-        raw_stage_model_name=dbt_config['raw_stage'], 
+        raw_stage_model_name=dbt_config['raw_stage_model_name'], 
         hash_keys=dbt_config['hash_keys'],
-        save_path=f'dbt/models/{dbt_config['stage']}.sql'
+        save_path=f'dbt/models/{dbt_config['stage_model_name']}.sql'
         )
     
-    hub_model_name = 'hub_voice_tech_services'
-    gen_hub_model(
-        distributed_by=dbt_config['raw_vault']['hubs'][hub_model_name]['distributed_by'],
-        source_model=dbt_config['stage'],
-        src_pk=dbt_config['raw_vault']['hubs'][hub_model_name]['src_pk'],
-        src_nk=dbt_config['raw_vault']['hubs'][hub_model_name]['src_nk'],
-        src_ldts=dbt_config['raw_vault']['hubs'][hub_model_name]['src_ldts'],
-        src_source=dbt_config['raw_vault']['hubs'][hub_model_name]['src_source'],
-        batch_target_tbl=dbt_config['raw_vault']['hubs'][hub_model_name]['batch_target_tbl'],
-        save_path=f'dbt/models/{hub_model_name}.sql'
-    )
+    for hub_config in dbt_config['raw_vault']['hubs']:
+        gen_hub_model(
+            distributed_by=hub_config['distributed_by'],
+            source_model=dbt_config['stage_model_name'],
+            src_pk=hub_config['src_pk'],
+            src_nk=hub_config['src_nk'],
+            src_ldts=hub_config['src_ldts'],
+            src_source=hub_config['src_source'],
+            batch_target_tbl=hub_config['batch_target_tbl'],
+            save_path=f'dbt/models/{hub_config['model_name']}.sql'
+        )
 
-    hsat_model_name = 'hsat_voice_tech_services'
-    gen_hsat_model(
-        distributed_by=dbt_config['raw_vault']['hsats'][hsat_model_name]['distributed_by'],
-        source_model=dbt_config['stage'],
-        src_pk=dbt_config['raw_vault']['hsats'][hsat_model_name]['src_pk'],
-        src_payload=dbt_config['raw_vault']['hsats'][hsat_model_name]['src_payload'],
-        src_ldts=dbt_config['raw_vault']['hsats'][hsat_model_name]['src_ldts'],
-        src_source=dbt_config['raw_vault']['hsats'][hsat_model_name]['src_source'],
-        batch_target_tbl=dbt_config['raw_vault']['hsats'][hsat_model_name]['batch_target_tbl'],
-        src_hashdiff=dbt_config['raw_vault']['hsats'][hsat_model_name]['src_hashdiff'],
-        src_eff=dbt_config['raw_vault']['hsats'][hsat_model_name]['src_eff'],
-        save_path=f'dbt/models/{hsat_model_name}.sql'
-    )
+    for hsat_config in dbt_config['raw_vault']['hsats']:
+        gen_hsat_model(
+            distributed_by=hsat_config['distributed_by'],
+            source_model=dbt_config['stage_model_name'],
+            src_pk=hsat_config['src_pk'],
+            src_payload=hsat_config['src_payload'],
+            src_ldts=hsat_config['src_ldts'],
+            src_source=hsat_config['src_source'],
+            batch_target_tbl=hsat_config['batch_target_tbl'],
+            src_hashdiff=hsat_config['src_hashdiff'],
+            src_eff=hsat_config['src_eff'],
+            save_path=f'dbt/models/{hsat_config['model_name']}.sql'
+        )
 
-    mart_model_name = 'mart_voice_tech_services'
     gen_mart_model(
-        distributed_by=dbt_config['base_dm'][mart_model_name]['distributed_by'],
-        source_model_hub=dbt_config['base_dm'][mart_model_name]['source_model_hub'],
-        source_model_hsat=dbt_config['base_dm'][mart_model_name]['source_model_hsat'],
-        src_pk=dbt_config['base_dm'][mart_model_name]['src_pk'],
-        src_payload=dbt_config['base_dm'][mart_model_name]['src_payload'],
-        unique_key=dbt_config['base_dm'][mart_model_name]['unique_key'],
-        src_nk=dbt_config['base_dm'][mart_model_name]['src_nk'],
-        src_eff=dbt_config['base_dm'][mart_model_name]['src_eff'],
-        save_path=f'dbt/models/{mart_model_name}.sql'
+        distributed_by=dbt_config['base_dm']['distributed_by'],
+        source_model_hub=dbt_config['base_dm']['source_model_hub'],
+        source_model_hsat=dbt_config['base_dm']['source_model_hsat'],
+        src_pk=dbt_config['base_dm']['src_pk'],
+        src_payload=dbt_config['base_dm']['src_payload'],
+        unique_key=dbt_config['base_dm']['unique_key'],
+        src_nk=dbt_config['base_dm']['src_nk'],
+        src_eff=dbt_config['base_dm']['src_eff'],
+        save_path=f'dbt/models/{dbt_config['base_dm']['model_name']}.sql'
     )
 
     gen_export_part2ch_model(
