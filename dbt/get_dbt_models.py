@@ -1,5 +1,7 @@
 import yaml
 import pandas as pd
+from pathlib import Path
+from data_utils import DataFrameFromFile
 
 def gen_raw_stage_model(
         stg_table_name,
@@ -171,7 +173,7 @@ def create_yaml_spec(
         model_description="",
         to_append=[], 
         to_exclude=[]):
-    df = pd.read_csv(attr_desc_path) 
+    df = DataFrameFromFile(attr_desc_path).pd
     columns = df[['name', 'description']].to_dict(orient='records')
 
     column_dict = {col['name']: col['description'] for col in columns}
@@ -204,6 +206,8 @@ def create_yaml_spec(
 if __name__ == "__main__":
     with open("dbt/dbt_config_from_file.yaml", "r", encoding='utf-8') as s:
         dbt_config = yaml.safe_load(s)
+
+    Path('dbt/models/').mkdir(parents=True, exist_ok=True)
 
     gen_raw_stage_model(
         stg_table_name=dbt_config['stg_table_name'],
