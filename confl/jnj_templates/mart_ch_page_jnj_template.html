@@ -22,8 +22,8 @@
         <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Ключ</th>
         <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Пример данных</th>
     </tr>
-    {% for column_name, description, data_type, formula, example in attrs %}
-    <tr><td>{{ schema_name }}</td><td>{{ table_name }}</td><td>{{ column_name }}</td><td>{{ description }}</td><td>{{ data_type }}</td><td>{{ formula }}</td><td>{{ example }}</td></tr>
+    {% for column_name, description, data_type, formula, key, example in attrs %}
+    <tr><td>{{ schema_name }}</td><td>{{ table_name }}</td><td>{{ column_name }}</td><td>{{ description }}</td><td>{{ data_type }}</td><td>{{ formula }}</td><td>{{ key }}</td><td>{{ example }}</td></tr>
     {% endfor %}
     </tbody></table></ac:rich-text-body>
 </ac:structured-macro><p><br/></p>

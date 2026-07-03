@@ -22,3 +22,7 @@ boolean:
   hadoop: boolean
   greenplum: boolean
   clickhouse: Bool
+double:
+  hadoop: double
+  greenplum: float
+  clickhouse: Float64 

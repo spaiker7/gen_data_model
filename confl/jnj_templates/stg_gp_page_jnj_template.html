@@ -22,41 +22,41 @@
         <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Ключ</th>
         <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Пример данных</th>
     </tr>
-    {% for column_name, description, data_type, formula, example in attrs %}
-    <tr><td>{{ schema_name }}</td><td>{{ table_name }}</td><td>{{ column_name }}</td><td>{{ description }}</td><td>{{ data_type }}</td><td>{{ formula }}</td><td>{{ example }}</td></tr>
+    {% for column_name, description, data_type, formula, key, example in attrs %}
+    <tr><td>{{ schema_name }}</td><td>{{ table_name }}</td><td>{{ column_name }}</td><td>{{ description }}</td><td>{{ data_type }}</td><td>{{ formula }}</td><td>{{ key }}</td><td>{{ example }}</td></tr>
     {% endfor %}
     </tbody></table></ac:rich-text-body>
-</ac:structured-macro><p><br/></p>
+</ac:structured-macro>
 <h1>Модели DBT</h1>
 <ac:structured-macro ac:macro-id="ee781b98-e459-41e6-b17b-804518aeac3a" ac:name="code" ac:schema-version="1">
     <ac:parameter ac:name="language">sql</ac:parameter>
     <ac:parameter ac:name="title">{{ raw_stage_model_name }}.sql</ac:parameter>
     <ac:parameter ac:name="collapse">true</ac:parameter>
     <ac:plain-text-body>
-        {{ raw_stage_model }}
+        <![CDATA[{{ raw_stage_model }}]]>
     </ac:plain-text-body>
-</ac:structured-macro><p><br/></p>
+</ac:structured-macro>
 <ac:structured-macro ac:macro-id="ee781b98-e459-41e6-b17b-804518aeac3a" ac:name="code" ac:schema-version="1">
     <ac:parameter ac:name="language">yaml</ac:parameter>
     <ac:parameter ac:name="title">{{ raw_stage_model_spec_name }}.yml</ac:parameter>
     <ac:parameter ac:name="collapse">true</ac:parameter>
     <ac:plain-text-body>
-        {{ raw_stage_model_spec }}
+        <![CDATA[{{ raw_stage_model_spec }}]]>
     </ac:plain-text-body>
-</ac:structured-macro><p><br/></p>
+</ac:structured-macro>
 <ac:structured-macro ac:macro-id="ee781b98-e459-41e6-b17b-804518aeac3a" ac:name="code" ac:schema-version="1">
     <ac:parameter ac:name="language">sql</ac:parameter>
     <ac:parameter ac:name="title">{{ stage_model_name }}.sql</ac:parameter>
     <ac:parameter ac:name="collapse">true</ac:parameter>
     <ac:plain-text-body>
-        {{ stage_model }}
+        <![CDATA[{{ stage_model }}]]>        
     </ac:plain-text-body>
-</ac:structured-macro><p><br/></p>
+</ac:structured-macro>
 <ac:structured-macro ac:macro-id="ee781b98-e459-41e6-b17b-804518aeac3a" ac:name="code" ac:schema-version="1">
     <ac:parameter ac:name="language">yaml</ac:parameter>
-    <ac:parameter ac:name="title">{{ raw_stage_model_spec_name }}.yml</ac:parameter>
+    <ac:parameter ac:name="title">{{ stage_model_spec_name }}.yml</ac:parameter>
     <ac:parameter ac:name="collapse">true</ac:parameter>
     <ac:plain-text-body>
-        {{ raw_stage_model_spec }}
+        <![CDATA[{{ stage_model_spec }}]]>   
     </ac:plain-text-body>
-</ac:structured-macro><p><br/></p>
+</ac:structured-macro>

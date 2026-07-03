@@ -1,7 +1,7 @@
 stg_table_name: CARD_ISSUANCE_REPORT
 hash_keys:
   card_issuance_hash_key: ['card_barcode', 'contract_number', 'contract_date']
-  card_issuance_sw_prop_hash_key: ['activation_date', 'transaction', 'card_type']
+  card_issuance_prop_hash_key: ['activation_date', 'transaction', 'card_type']
 
 raw_stage_model_name: raw_card_issuance_tsretail
 stage_model_name: v_card_issuance_tt_hsat_hub

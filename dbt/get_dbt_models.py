@@ -204,7 +204,7 @@ def create_yaml_spec(
 
 
 if __name__ == "__main__":
-    with open("dbt/dbt_config_from_file.yaml", "r", encoding='utf-8') as s:
+    with open("dbt/dbt_config_from_file_card_issuance_detailed.yaml", "r", encoding='utf-8') as s:
         dbt_config = yaml.safe_load(s)
 
     Path('dbt/models/').mkdir(parents=True, exist_ok=True)

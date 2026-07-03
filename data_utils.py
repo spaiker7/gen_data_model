@@ -14,6 +14,8 @@ class DataFrameFromFile:
         self.filepath = next((x for x in samples_dir.iterdir() if x.is_file()), None)
         self.ext = self.filepath.suffix.lower()
 
+        # encodings = ['utf-8', 'cp1252']
+
         with open(self.filepath, 'rb') as f:
             raw_data = f.read()
             result = chardet.detect(raw_data)
@@ -22,7 +24,7 @@ class DataFrameFromFile:
         if not self.encoding:
             self.encoding = 'utf-8'
 
-        if self.ext == '.csv':
+        if self.ext == '.csv':    
             self.pd = pd.read_csv(self.filepath, sep=csv_sep, encoding=self.encoding, low_memory=False)
         elif self.ext == '.xlsx':
             self.pd = pd.read_excel(self.filepath, sheet_name=sheet_name)
