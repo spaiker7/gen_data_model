@@ -1,40 +1,149 @@
+import csv
 import yaml
 import json
 import re
-from datetime import datetime
+import logging
 from pathlib import Path
 import chardet
 import pandas as pd
+from typing import Any
+from jinja2 import Environment, FileSystemLoader
 
-class DataFrameFromFile:
-    def __init__(self, samples_dir='stream/samples', json_parse_sep='.', csv_sep=';', sheet_name=0):
-        super().__init__()
+logger = logging.getLogger(__name__)
 
-        samples_dir = Path(samples_dir)
-        self.filepath = next((x for x in samples_dir.iterdir() if x.is_file()), None)
-        self.ext = self.filepath.suffix.lower()
+class TabularFromFile:
+    def __init__(self, path, json_parse_sep=".", sheet_name=0):
+        path = Path(path)
 
-        # encodings = ['utf-8', 'cp1252']
-
-        with open(self.filepath, 'rb') as f:
-            raw_data = f.read()
-            result = chardet.detect(raw_data)
-            self.encoding = result['encoding']
-
-        if not self.encoding:
-            self.encoding = 'utf-8'
-
-        if self.ext == '.csv':    
-            self.pd = pd.read_csv(self.filepath, sep=csv_sep, encoding=self.encoding, low_memory=False)
-        elif self.ext == '.xlsx':
-            self.pd = pd.read_excel(self.filepath, sheet_name=sheet_name)
-        elif self.ext == '.json':
-            with open(self.filepath, 'r') as f:
-                data = json.load(f)
-            self.pd = pd.json_normalize(data, sep=json_parse_sep)
+        if path.is_dir():
+            self.filepath = next((x for x in path.iterdir() if x.is_file()), None)
+            if self.filepath is None:
+                raise FileNotFoundError(f"No files found in {path}")
         else:
+            self.filepath = path
+
+        self.ext = self.filepath.suffix.lower()
+        self.json_parse_sep = json_parse_sep
+        self.sheet_name = sheet_name
+
+        with open(self.filepath, "rb") as f:
+            raw = f.read()
+            self.encoding = chardet.detect(raw)["encoding"] or "utf-8"
+
+        self.READERS = {
+            ".csv": self._read_csv,
+            ".xlsx": self._read_excel,
+            ".xls": self._read_excel,
+            ".json": self._read_json,
+        }
+
+        reader = self.READERS.get(self.ext)
+        if reader is None:
             raise ValueError(f"Unsupported file extension: {self.ext}")
+
+        self.pd = reader()
+
+    def _detect_separator(self):
+        with open(self.filepath, "r", encoding=self.encoding, newline="") as f:
+            sample = f.read(4096)
+            f.seek(0)
+            dialect = csv.Sniffer().sniff(sample, delimiters=",;\t|")
+            return dialect.delimiter
+
+    def _read_csv(self):
+        return pd.read_csv(
+            self.filepath,
+            sep=self._detect_separator(),
+            encoding=self.encoding,
+            low_memory=False,
+        )
+
+    def _read_excel(self):
+        return pd.read_excel(
+            self.filepath,
+            sheet_name=self.sheet_name,
+        )
+
+    def _read_json(self):
+        with open(self.filepath, encoding=self.encoding) as f:
+            data = json.load(f)
+
+        return pd.json_normalize(
+            data,
+            sep=self.json_parse_sep,
+        )
+
+
+class TemplateGenerator:
+    def __init__(
+        self,       
+        template_root: str | Path = "."
+    ):
+
+        self.env = Environment(
+            loader=FileSystemLoader(template_root),
+            trim_blocks=True,
+            lstrip_blocks=True,
+            keep_trailing_newline=True,
+            variable_start_string="[[",
+            variable_end_string="]]",
+            block_start_string="<%",
+            block_end_string="%>"
+        )
+
+    def render_template(
+        self,
+        template_path: str,
+        context: dict[str, Any]
+    ) -> str:
+
+        template = self.env.get_template(template_path)
+        return template.render(**context)
     
+    def save(
+        self,
+        output_path: str | Path,
+        content: str
+    ):
+        output_path = Path(output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(content, encoding="utf-8")
+        logger.info("Generated %s", output_path)
+    
+    def render_to_file(
+        self,
+        *,
+        template_path: str,
+        output_path: Path,
+        context: dict
+    ):
+        content = self.render_template(template_path, context)
+        self.save(output_path, content)
+
+    @staticmethod
+    def _load_yaml(path: Path) -> dict[str, Any]:
+        with open(path, encoding="utf-8") as f:
+            return yaml.safe_load(f)
+        
+    @staticmethod
+    def _load_json(path: Path) -> list[dict[str, Any]]:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+        
+    @staticmethod
+    def unique(*lists) -> list[str]:
+
+        seen = set()
+        result = []
+
+        for lst in lists:
+            for col in lst:
+                if col not in seen:
+                    seen.add(col)
+                    result.append(col)
+
+        return result  
+          
 def mask_sensitive_info(sample):
 
     phone_pattern = r'^\d{11}$'

@@ -1,6 +1,6 @@
 .env
 __pycache__/
 src/sample/*
-src/attr_desc/*
+src/mapping/*
 dbt/models/*
 dbt/spec/*

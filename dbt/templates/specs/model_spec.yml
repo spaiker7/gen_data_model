@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: [[ model_name ]]
+    description: "[[ model_description ]]"
+
+    columns:
+<% for col in columns %>
+      - name: [[ col.name ]]
+        description: "[[ col.description ]]"
+<% endfor %>

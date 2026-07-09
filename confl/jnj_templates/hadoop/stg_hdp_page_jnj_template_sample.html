@@ -25,38 +25,13 @@
     {% for column_name, description, data_type, formula, key, example in attrs %}
     <tr><td>{{ schema_name }}</td><td>{{ table_name }}</td><td>{{ column_name }}</td><td>{{ description }}</td><td>{{ data_type }}</td><td>{{ formula }}</td><td>{{ key }}</td><td>{{ example }}</td></tr>
     {% endfor %}
-    </tbody></table></ac:rich-text-body>
-</ac:structured-macro>
-<h1>Модели DBT</h1>
-<ac:structured-macro ac:macro-id="ee781b98-e459-41e6-b17b-804518aeac3a" ac:name="code" ac:schema-version="1">
-    <ac:parameter ac:name="language">sql</ac:parameter>
-    <ac:parameter ac:name="title">{{ raw_stage_model_name }}.sql</ac:parameter>
+    </tbody></table></ac:rich-text-body></ac:structured-macro>
+<h2>Пример данных</h2>
+<ac:structured-macro ac:macro-id="169ea31c-1a14-4e6e-9d28-9f86a9a4a446" ac:name="code" ac:schema-version="1">
+    <ac:parameter ac:name="language">{{ sample_language }}</ac:parameter>
+    <ac:parameter ac:name="title">sample{{ sample_ext }}</ac:parameter>
     <ac:parameter ac:name="collapse">true</ac:parameter>
     <ac:plain-text-body>
-        <![CDATA[{{ raw_stage_model }}]]>
-    </ac:plain-text-body>
-</ac:structured-macro>
-<ac:structured-macro ac:macro-id="ee781b98-e459-41e6-b17b-804518aeac3a" ac:name="code" ac:schema-version="1">
-    <ac:parameter ac:name="language">yaml</ac:parameter>
-    <ac:parameter ac:name="title">{{ raw_stage_model_spec_name }}.yml</ac:parameter>
-    <ac:parameter ac:name="collapse">true</ac:parameter>
-    <ac:plain-text-body>
-        <![CDATA[{{ raw_stage_model_spec }}]]>
-    </ac:plain-text-body>
-</ac:structured-macro>
-<ac:structured-macro ac:macro-id="ee781b98-e459-41e6-b17b-804518aeac3a" ac:name="code" ac:schema-version="1">
-    <ac:parameter ac:name="language">sql</ac:parameter>
-    <ac:parameter ac:name="title">{{ stage_model_name }}.sql</ac:parameter>
-    <ac:parameter ac:name="collapse">true</ac:parameter>
-    <ac:plain-text-body>
-        <![CDATA[{{ stage_model }}]]>        
-    </ac:plain-text-body>
-</ac:structured-macro>
-<ac:structured-macro ac:macro-id="ee781b98-e459-41e6-b17b-804518aeac3a" ac:name="code" ac:schema-version="1">
-    <ac:parameter ac:name="language">yaml</ac:parameter>
-    <ac:parameter ac:name="title">{{ stage_model_spec_name }}.yml</ac:parameter>
-    <ac:parameter ac:name="collapse">true</ac:parameter>
-    <ac:plain-text-body>
-        <![CDATA[{{ stage_model_spec }}]]>   
+        <![CDATA[{{ sample_text }}]]>   
     </ac:plain-text-body>
 </ac:structured-macro>

@@ -1,0 +1,226 @@
+[
+  {
+    "name": "CONTRACT_MONTH",
+    "source_name": "МЕСЯЦ ДОГОВОРА",
+    "dtype": "timestamp",
+    "description": "э",
+    "example": "2026-06-01 00:00:00"
+  },
+  {
+    "name": "ДАТА_ДОГОВОРА",
+    "source_name": "ДАТА ДОГОВОРА",
+    "dtype": "timestamp",
+    "description": "",
+    "example": "2026-06-03 00:00:00"
+  },
+  {
+    "name": "МЕСЯЦ_ОФОРМЛЕНИЯ",
+    "source_name": "МЕСЯЦ ОФОРМЛЕНИЯ",
+    "dtype": "timestamp",
+    "description": "",
+    "example": "2026-06-01 00:00:00"
+  },
+  {
+    "name": "ДАТА_И_ВРЕМЯ_ОФОРМЛЕНИЯ",
+    "source_name": "ДАТА И ВРЕМЯ ОФОРМЛЕНИЯ",
+    "dtype": "timestamp",
+    "description": "",
+    "example": "2026-06-03 09:51:00"
+  },
+  {
+    "name": "БАНК_(МТСБ,_ЭКСИ)",
+    "source_name": "Банк (МТСБ, Экси)",
+    "dtype": "string",
+    "description": "",
+    "example": "Экси Банк"
+  },
+  {
+    "name": "ТИП_КАРТЫ_(ДК,_КК,_НЦПК,_ВИРТУАЛЬНАЯ_КАРТА)",
+    "source_name": "ТИП КАРТЫ (ДК, КК, НЦПК, ВИРТУАЛЬНАЯ КАРТА)",
+    "dtype": "string",
+    "description": "",
+    "example": "ДК Льюис"
+  },
+  {
+    "name": "НАИМЕНОВАНИЕ_ПРОДУКТА",
+    "source_name": "НАИМЕНОВАНИЕ ПРОДУКТА",
+    "dtype": "string",
+    "description": "",
+    "example": "LIP_MIR Advanced MTS Money"
+  },
+  {
+    "name": "ФЛАГ_АКТИВАЦИИ_ДЛЯ_РТК",
+    "source_name": "ФЛАГ АКТИВАЦИИ ДЛЯ РТК",
+    "dtype": "tinyint",
+    "description": "",
+    "example": "1"
+  },
+  {
+    "name": "ИНФРАСТРУКТУРНЫЙ_ПЛАТЁЖ",
+    "source_name": "ИНФРАСТРУКТУРНЫЙ ПЛАТЁЖ",
+    "dtype": "string",
+    "description": "",
+    "example": ""
+  },
+  {
+    "name": "ФЛАГ_АКТИВАЦИИ_БАНКА",
+    "source_name": "ФЛАГ АКТИВАЦИИ БАНКА",
+    "dtype": "tinyint",
+    "description": "",
+    "example": "1"
+  },
+  {
+    "name": "КОД_ТОЧКИ_ПРОДАЖ_РТК",
+    "source_name": "КОД ТОЧКИ ПРОДАЖ РТК",
+    "dtype": "string",
+    "description": "",
+    "example": "D993"
+  },
+  {
+    "name": "ШТРИХКОД_КАРТЫ",
+    "source_name": "ШТРИХКОД КАРТЫ",
+    "dtype": "string",
+    "description": "",
+    "example": "C$L1497491232$LM"
+  },
+  {
+    "name": "ФИО_СОТРУДНИКА_ВЫДАВШЕГО_КАРТУ",
+    "source_name": "ФИО СОТРУДНИКА ВЫДАВШЕГО КАРТУ",
+    "dtype": "string",
+    "description": "",
+    "example": "Азизова Айсель Афласовна"
+  },
+  {
+    "name": "НОМЕР_ДОГОВОРА_(ЗАЯВКИ)",
+    "source_name": "НОМЕР ДОГОВОРА (ЗАЯВКИ)",
+    "dtype": "bigint",
+    "description": "",
+    "example": "500003946468"
+  },
+  {
+    "name": "НОМЕР_ДОГОВОРА_БАНКА",
+    "source_name": "НОМЕР ДОГОВОРА БАНКА",
+    "dtype": "bigint",
+    "description": "",
+    "example": "100034133463"
+  },
+  {
+    "name": "КАНАЛ_ЗАЯВКИ_РТК",
+    "source_name": "КАНАЛ ЗАЯВКИ РТК",
+    "dtype": "string",
+    "description": "",
+    "example": "РТК"
+  },
+  {
+    "name": "СУММА_ТРАНЗАКЦИЙ_С_ДАТЫ_ВЫДАЧИ_90/60_ДНЕЙ",
+    "source_name": "СУММА ТРАНЗАКЦИЙ С ДАТЫ ВЫДАЧИ 90/60 ДНЕЙ",
+    "dtype": "double",
+    "description": "",
+    "example": "825.95"
+  },
+  {
+    "name": "ДАТА_ПЕРВОЙ_РАСХОДНОЙ_ТРАНЗАКЦИИ",
+    "source_name": "ДАТА ПЕРВОЙ РАСХОДНОЙ ТРАНЗАКЦИИ",
+    "dtype": "timestamp",
+    "description": "",
+    "example": "2026-06-03 00:00:00"
+  },
+  {
+    "name": "СУММА_ПЕРВОЙ_РАСХОДНОЙ_ОПЕРАЦИИ",
+    "source_name": "СУММА ПЕРВОЙ РАСХОДНОЙ ОПЕРАЦИИ",
+    "dtype": "smallint",
+    "description": "",
+    "example": "500"
+  },
+  {
+    "name": "ДАТА_ЗАКРЫТИЯ_КАРТЫ",
+    "source_name": "ДАТА ЗАКРЫТИЯ КАРТЫ",
+    "dtype": "string",
+    "description": "",
+    "example": ""
+  },
+  {
+    "name": "СНЯТИЕ_НАЛИЧНЫХ_КК",
+    "source_name": "СНЯТИЕ НАЛИЧНЫХ КК",
+    "dtype": "string",
+    "description": "",
+    "example": ""
+  },
+  {
+    "name": "КОД_ПРОДУКТА",
+    "source_name": "КОД ПРОДУКТА",
+    "dtype": "string",
+    "description": "",
+    "example": "LIP_MIR Advanced MTS Money"
+  },
+  {
+    "name": "ОДОБРЕНИЕ_ПО_ЗАЯВКЕ",
+    "source_name": "ОДОБРЕНИЕ ПО ЗАЯВКЕ",
+    "dtype": "tinyint",
+    "description": "",
+    "example": "1"
+  },
+  {
+    "name": "НОМЕР_ЗАЯВКИ_В_РТК",
+    "source_name": "НОМЕР ЗАЯВКИ В РТК",
+    "dtype": "int",
+    "description": "",
+    "example": "42355381"
+  },
+  {
+    "name": "АДРЕС_ТТ",
+    "source_name": "АДРЕС ТТ",
+    "dtype": "string",
+    "description": "",
+    "example": "628403, Ханты-Мансийский Автономный округ - Югра АО, Сургут г, Югорский тракт, 38"
+  },
+  {
+    "name": "ОДОБРЕННЫЙ_КРЕДИТ",
+    "source_name": "ОДОБРЕННЫЙ КРЕДИТ",
+    "dtype": "string",
+    "description": "",
+    "example": ""
+  },
+  {
+    "name": "АНКЕТА",
+    "source_name": "АНКЕТА",
+    "dtype": "string",
+    "description": "",
+    "example": ""
+  },
+  {
+    "name": "ТЕХНОЛОГИЯ_ПОДПИСАНИЯ_(ББ_И_БУМАГА)",
+    "source_name": "ТЕХНОЛОГИЯ ПОДПИСАНИЯ (ББ И БУМАГА)",
+    "dtype": "tinyint",
+    "description": "",
+    "example": "1"
+  },
+  {
+    "name": "ДАТА_ПЕРВОГО_ВХОДА_В_ДБО",
+    "source_name": "ДАТА ПЕРВОГО ВХОДА В ДБО",
+    "dtype": "timestamp",
+    "description": "",
+    "example": "2026-06-03 00:00:00"
+  },
+  {
+    "name": "ВОЗВРАТ",
+    "source_name": "ВОЗВРАТ",
+    "dtype": "tinyint",
+    "description": "",
+    "example": "0"
+  },
+  {
+    "name": "СТАТУС_ЗАЯВКИ",
+    "source_name": "СТАТУС ЗАЯВКИ",
+    "dtype": "string",
+    "description": "",
+    "example": "Завершена"
+  },
+  {
+    "name": "ДАТА_И_ВРЕМЯ_ПОЛУЧЕНИЯ_КОНЕЧНОГО_СТАТУСА_ОТ_БАНКА",
+    "source_name": "ДАТА И ВРЕМЯ ПОЛУЧЕНИЯ КОНЕЧНОГО СТАТУСА ОТ БАНКА",
+    "dtype": "timestamp",
+    "description": "",
+    "example": "2026-06-03 10:04:00"
+  }
+]

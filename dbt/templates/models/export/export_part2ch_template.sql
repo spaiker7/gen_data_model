@@ -11,11 +11,11 @@
 {% set curdate = var('curdate', none) %}
 WITH changed_parts AS (
     SELECT
-        '<tgt_table_name>' as table_name,
-        to_char(m.<partitioning_key_date>, 'YYYYMM') as part_period_name,
-        cast(to_char(m.<partitioning_key_date>, 'YYYYMM') as int4) as part_id,
+        '[[ tgt_table_name ]]' as table_name,
+        to_char(m.[[ partitioning_key_date ]], 'YYYYMM') as part_period_name,
+        cast(to_char(m.[[ partitioning_key_date ]], 'YYYYMM') as int4) as part_id,
         'auto' as type_load
-    FROM {{ ref('<source_model>') }} m
+    FROM {{ ref('[[ source_model ]]') }} m
     {% if curdate is not none %}
     WHERE m.load_date >= cast('{{ curdate }}' as timestamp)
     {% endif %}
@@ -30,7 +30,7 @@ SELECT
 FROM changed_parts cp
 WHERE NOT EXISTS (
     SELECT 1
-    FROM {{ this }} e
+    FROM {{ this }} 
     WHERE e.table_name = cp.table_name
       AND e.part_period_name = cp.part_period_name
 )

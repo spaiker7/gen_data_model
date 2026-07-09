@@ -1,0 +1,111 @@
+source:
+  schema: tsretail_stg
+  table: card_issuance_detailed
+  
+models:
+
+  raw_stage:
+    model_name: raw_stage_card_issuance_detailed
+    description: Сырые данные от источника по батчам за 7 последних дней
+    template: dbt/templates/models/raw_stage/raw_stage_template.sql
+
+  stage:
+    model_name: stg_card_issuance_detailed
+    description: Сырые данные с расчитанными хэш-ключами
+    template: dbt/templates/models/stage/stage_template.sql
+    hash_keys:
+      card_issuance_det_hash_key:
+        - registration_datetime
+        - bank_contract_number
+      card_issuance_det_prop_hash_key:
+        - contract_status
+        - contract_date
+        - contract_amount
+
+  raw_vault:
+    hubs:
+      - model_name: hub_card_issuance_detailed
+        description: Хаб
+        template: dbt/templates/models/raw_vault/hubs/hub_template.sql
+        distributed_by: card_issuance_det_hash_key
+        src_pk: card_issuance_det_hash_key
+        src_nk:
+          - registration_datetime
+          - bank_contract_number
+        src_ldts: load_date
+        src_source: source
+        batch_target_tbl: batch_target_tbl # dv.hub_card_issuance_detailed
+    hsats:
+      - model_name: hsat_card_issuance_detailed
+        description: Сателлит
+        template: dbt/templates/models/raw_vault/hsats/hsat_template.sql
+        distributed_by: card_issuance_det_hash_key
+        src_pk: card_issuance_det_hash_key
+        src_hashdiff: card_issuance_det_prop_hash_key
+        src_payload:
+          - contract_status
+          - contract_date
+          - contract_amount
+        src_eff: report_date
+        src_ldts: load_date
+        src_source: source
+        batch_target_tbl: batch_target_tbl # dv.hsat_card_issuance_detailed
+
+  marts:
+    - model_name: mart_card_issuance_detailed
+      description: Витрина
+      template: dbt/templates/models/marts/mart_from_file_template.sql
+      distributed_by: card_issuance_det_hash_key
+      source_model_hub: hub_card_issuance_detailed
+      source_model_hsat: hsat_card_issuance_detailed
+      src_pk: card_issuance_det_hash_key
+      src_nk:
+        - registration_datetime
+        - bank_contract_number
+      src_payload:
+        - contract_status
+        - contract_date
+        - contract_amount
+      unique_key: card_issuance_det_hash_key
+      src_eff: report_date
+
+  export:
+    - model_name: export_card_issuance_detailed
+      description:
+      template: dbt/templates/models/export/export_part2ch_template.sql
+      tgt_table_name: card_issuance_detailed
+      source_model: mart_card_issuance_detailed
+      partitioning_key_date: contract_month
+
+    
+technical_attrs:
+
+    - name: source
+      description: Источник данных
+      dtype: string
+      source_name: ""
+      example: ""
+
+    - name: doc_id
+      description: Идентификатор документа
+      dtype: string
+      source_name: tech_stg.xml_archive
+      example: "17816007320693"
+    
+    - name: batch_id
+      description: Идентификатор пачки, в которой загружен документ
+      dtype: string
+      source_name: tech_stg.xml_archive
+      example: "17816007320693"
+
+    - name: load_date
+      description: Дата и время создания записи
+      dtype: timestamp
+      source_name: now()
+      example: 2026-01-01
+
+    - name: p_date
+      description: Дата создания записи
+      dtype: string
+      source_name: now()
+      example: 2026-01-01

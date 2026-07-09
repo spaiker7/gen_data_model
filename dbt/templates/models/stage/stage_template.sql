@@ -1,8 +1,15 @@
 {{ config(materialized='view') }}
  
 {%- set yaml_metadata -%}
-source_model: <source_model>
-hashed_columns: <hashed_columns_in>
+source_model: [[ source_model ]]
+hashed_columns: [[ hashed_columns_in ]]
+<% for hash_key, cols in hash_keys.items() %>
+  [[ hash_key ]]:
+<% for col in cols %>
+    - '![[ col ]]'
+    - [[ col ]]
+<% endfor %>
+<% endfor %>
 
 {%- endset -%}
  
