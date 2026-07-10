@@ -26,21 +26,21 @@
     <tr><td>{{ schema_name }}</td><td>{{ table_name }}</td><td>{{ column_name }}</td><td>{{ description }}</td><td>{{ data_type }}</td><td>{{ formula }}</td><td>{{ key }}</td><td>{{ example }}</td></tr>
     {% endfor %}
     </tbody></table></ac:rich-text-body>
-</ac:structured-macro><p><br/></p>
+</ac:structured-macro>
 <h1>Модель DBT</h1>
 <ac:structured-macro ac:macro-id="ee781b98-e459-41e6-b17b-804518aeac3a" ac:name="code" ac:schema-version="1">
     <ac:parameter ac:name="language">sql</ac:parameter>
-    <ac:parameter ac:name="title">{{ model_name }}.sql</ac:parameter>
+    <ac:parameter ac:name="title">{{ model_n }}.sql</ac:parameter>
     <ac:parameter ac:name="collapse">true</ac:parameter>
     <ac:plain-text-body>
-        {{ model }}
+        <![CDATA[{{ model }}]]> 
     </ac:plain-text-body>
-</ac:structured-macro><p><br/></p>
+</ac:structured-macro>
 <ac:structured-macro ac:macro-id="ee781b98-e459-41e6-b17b-804518aeac3a" ac:name="code" ac:schema-version="1">
     <ac:parameter ac:name="language">yaml</ac:parameter>
     <ac:parameter ac:name="title">{{ model_spec_name }}.yml</ac:parameter>
     <ac:parameter ac:name="collapse">true</ac:parameter>
     <ac:plain-text-body>
-        {{ model_spec }}
+        <![CDATA[{{ model_spec }}]]> 
     </ac:plain-text-body>
-</ac:structured-macro><p><br/></p>
+</ac:structured-macro>

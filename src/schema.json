@@ -7,7 +7,7 @@
     "example": "2026-06-01 00:00:00"
   },
   {
-    "name": "ДАТА_ДОГОВОРА",
+    "name": "contract_date",
     "source_name": "ДАТА ДОГОВОРА",
     "dtype": "timestamp",
     "description": "",
@@ -21,7 +21,7 @@
     "example": "2026-06-01 00:00:00"
   },
   {
-    "name": "ДАТА_И_ВРЕМЯ_ОФОРМЛЕНИЯ",
+    "name": "registration_datetime",
     "source_name": "ДАТА И ВРЕМЯ ОФОРМЛЕНИЯ",
     "dtype": "timestamp",
     "description": "",
@@ -91,7 +91,7 @@
     "example": "Азизова Айсель Афласовна"
   },
   {
-    "name": "НОМЕР_ДОГОВОРА_(ЗАЯВКИ)",
+    "name": "bank_contract_number",
     "source_name": "НОМЕР ДОГОВОРА (ЗАЯВКИ)",
     "dtype": "bigint",
     "description": "",
@@ -112,7 +112,7 @@
     "example": "РТК"
   },
   {
-    "name": "СУММА_ТРАНЗАКЦИЙ_С_ДАТЫ_ВЫДАЧИ_90/60_ДНЕЙ",
+    "name": "contract_amount",
     "source_name": "СУММА ТРАНЗАКЦИЙ С ДАТЫ ВЫДАЧИ 90/60 ДНЕЙ",
     "dtype": "double",
     "description": "",
@@ -210,7 +210,7 @@
     "example": "0"
   },
   {
-    "name": "СТАТУС_ЗАЯВКИ",
+    "name": "contract_status",
     "source_name": "СТАТУС ЗАЯВКИ",
     "dtype": "string",
     "description": "",
@@ -219,6 +219,13 @@
   {
     "name": "ДАТА_И_ВРЕМЯ_ПОЛУЧЕНИЯ_КОНЕЧНОГО_СТАТУСА_ОТ_БАНКА",
     "source_name": "ДАТА И ВРЕМЯ ПОЛУЧЕНИЯ КОНЕЧНОГО СТАТУСА ОТ БАНКА",
+    "dtype": "timestamp",
+    "description": "",
+    "example": "2026-06-03 10:04:00"
+  },
+  {
+    "name": "report_date",
+    "source_name": "Дата отчета в сетевой папке",
     "dtype": "timestamp",
     "description": "",
     "example": "2026-06-03 10:04:00"

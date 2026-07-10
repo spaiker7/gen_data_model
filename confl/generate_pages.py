@@ -277,6 +277,7 @@ class DocumentationGenerator(TemplateGenerator):
                 formula_builder=lambda c:
                     f"{self.docs["stage"]["schema_name"]}.{self.docs["stage"]['table_name']}.{c['name']}".upper()                
             )
+
             self.render_publish_page(
                 title=page_cfg["title"],
                 parent_id=page_cfg["parent_page_id"],
@@ -285,8 +286,8 @@ class DocumentationGenerator(TemplateGenerator):
                     attrs=attrs,
                     model=self.models.get(hub["model_name"], {}),
                     model_spec=self.specs_plain.get(hub["model_name"], {}),
-                    model_name=f"{hub["model_name"]}.sql",
-                    model_spec_name=f"{hub["model_name"]}.sql",
+                    model_n=f"{hub["model_name"]}",
+                    model_spec_name=f"{hub["model_name"]}",
                     **page_cfg
                 )
             )
@@ -308,8 +309,8 @@ class DocumentationGenerator(TemplateGenerator):
                     attrs=attrs,
                     model=self.models.get(hsat["model_name"], {}),
                     model_spec=self.specs_plain.get(hsat["model_name"], {}),
-                    model_name=f"{hsat["model_name"]}.sql",
-                    model_spec_name=f"{hsat["model_name"]}.sql",
+                    model_n=f"{hsat["model_name"]}",
+                    model_spec_name=f"{hsat["model_name"]}",
                     **page_cfg
                 )
             )
@@ -317,27 +318,28 @@ class DocumentationGenerator(TemplateGenerator):
     def generate_marts(self):
         for mart in self.models_cfg["marts"]:
             # greenplum
-            page_cfg = next((cfg for cfg in self.docs["base_marts"]if cfg["model_name"] == mart["model_name"]), None)
+            page_cfg_gp = next((cfg for cfg in self.docs["base_marts"] if cfg["model_name"] == mart["model_name"]), None)
             export = next((e for e in self.models_cfg["export"] if e["source_model"] == mart["model_name"]), None)
             attrs = self.build_attrs(
                 model_name=mart["model_name"],
-                db_dtypes=page_cfg["db_dtypes"]
+                db_dtypes=page_cfg_gp["db_dtypes"],
+                formula_builder=lambda c: f"{c['name']}".upper()
             )
             self.render_publish_page(
-                title=page_cfg["title"],
-                parent_id=page_cfg["parent_page_id"],
-                template_path=page_cfg["template_path"],
+                title=page_cfg_gp["title"],
+                parent_id=page_cfg_gp["parent_page_id"],
+                template_path=page_cfg_gp["template_path"],
                 context=self.build_context(
                     attrs=attrs,
-                    datamart_model_spec_name=f"{mart["model_name"]}.yml",
-                    datamart_model_name=f"{mart["model_name"]}.sql",
-                    export_part2ch_model_name=f"{export["model_name"]}.sql",
-                    export_part2ch_model_spec_name=f"{export["model_name"]}.yml",
+                    datamart_model_spec_name=f"{mart["model_name"]}",
+                    datamart_model_name=f"{mart["model_name"]}",
+                    export_part2ch_model_name=f"{export["model_name"]}",
+                    export_part2ch_model_spec_name=f"{export["model_name"]}",
                     datamart_model=self.models.get(mart["model_name"], ""),
                     export_part2ch_model=self.models.get(export["model_name"], "") if export else "",
                     datamart_model_spec=self.specs_plain.get(mart["model_name"], {}),
                     export_part2ch_model_spec=self.specs_plain.get(export["model_name"], {}) if export else {},
-                    **page_cfg
+                    **page_cfg_gp
                 )
          
             )
@@ -345,7 +347,9 @@ class DocumentationGenerator(TemplateGenerator):
             page_cfg = next((cfg for cfg in self.docs["marts"]if cfg["model_name"] == mart["model_name"]), None)
             attrs = self.build_attrs(
                 model_name=mart["model_name"],
-                db_dtypes=page_cfg["db_dtypes"]
+                db_dtypes=page_cfg["db_dtypes"],
+                formula_builder=lambda c:
+                    f"{page_cfg_gp["schema_name"]}.{page_cfg_gp['table_name']}.{c['name']}".upper()         
             )
             self.render_publish_page(
                 title=page_cfg["title"],
@@ -361,13 +365,13 @@ class DocumentationGenerator(TemplateGenerator):
 
         logger.info("Generating Confluence pages...")
 
-        # self.generate_source_page()
-        # self.generate_stage_page()
+        self.generate_source_page()
+        self.generate_stage_page()
 
         self.generate_hubs()
-        # self.generate_hsats()
+        self.generate_hsats()
 
-        # self.generate_marts()
+        self.generate_marts()
 
         logger.info("Documentation generation completed.")
 

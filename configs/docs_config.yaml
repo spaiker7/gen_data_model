@@ -59,7 +59,7 @@ confluence:
     - model_name: mart_card_issuance_detailed
       title: '[TEST] DM.DM.CARD_ISSUANCE_REPORT (Отчет Банка по ДК/КК по выдачам карт)'
       table_desc: Отчет Банка по ДК/КК по выдачам карт
-      template_path: greenplum/raw_vault_gp_page_jnj_template.html
+      template_path: greenplum/mart_gp_page_jnj_template.html
       parent_page_id: 2182845903
       update_schedule: T-1
       history_depth: 2026-05-01
@@ -71,7 +71,7 @@ confluence:
     - model_name: mart_card_issuance_detailed
       title: '[TEST] DEFAULT.HSAT_CARD_ISSUANCE_REPORT (Отчет Банка по ДК/КК по выдачам карт)'
       table_desc: Отчет Банка по ДК/КК по выдачам карт
-      template_path: clickhouse/raw_vault_gp_page_jnj_template.html
+      template_path: clickhouse/mart_ch_page_jnj_template.html
       parent_page_id: 2182845903
       update_schedule: T-1
       history_depth: 2026-05-01
