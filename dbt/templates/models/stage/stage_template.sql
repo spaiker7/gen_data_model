@@ -3,9 +3,9 @@
 {%- set yaml_metadata -%}
 source_model: [[ source_model ]]
 hashed_columns: [[ hashed_columns_in ]]
-<% for hash_key, cols in hash_keys.items() %>
+<% for hash_key, hash_cfg in hash_keys.items() %>
   [[ hash_key ]]:
-<% for col in cols %>
+<% for col in hash_cfg.columns %>
     - '![[ col ]]'
     - [[ col ]]
 <% endfor %>

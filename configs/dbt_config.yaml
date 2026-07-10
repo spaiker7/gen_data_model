@@ -15,12 +15,16 @@ models:
     template: dbt/templates/models/stage/stage_template.sql
     hash_keys:
       card_issuance_det_hash_key:
-        - registration_datetime
-        - bank_contract_number
+        description: Хэш-ключ факта события выдачи карты
+        columns:
+          - registration_datetime
+          - bank_contract_number
       card_issuance_det_prop_hash_key:
-        - contract_status
-        - contract_date
-        - contract_amount
+        description: Хэш-ключ атрибутов факта события выдачи карты      
+        columns:      
+          - contract_status
+          - contract_date
+          - contract_amount
 
   raw_vault:
     hubs:

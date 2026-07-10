@@ -45,6 +45,7 @@ class DocumentationGenerator(TemplateGenerator):
         self.load_specs()
 
         self.add_tech_attrs_to_schema()
+        self.add_hash_keys_to_schema()
         self.schema_lookup = {col["name"]: col for col in self.schema}
 
         self.env = Environment(
@@ -72,6 +73,20 @@ class DocumentationGenerator(TemplateGenerator):
                 "example": attr.get("example", ""),
             })
             self.tech_attrs.append(attr["name"])
+
+    def add_hash_keys_to_schema(self):
+        """
+        Add generated hash key columns to the schema metadata.
+        """
+        hash_keys = self.models_cfg["stage"].get("hash_keys", {})
+        for hash_name, cfg in hash_keys.items():
+            self.schema.append({
+                "name": hash_name,
+                "source_name": "",
+                "dtype": "hash_key",
+                "description": cfg.get("description", ""),
+                "example": "",
+            })
 
     def load_env(self):
 
@@ -141,19 +156,44 @@ class DocumentationGenerator(TemplateGenerator):
         """
         attrs = []
         spec = self.specs[model_name]
+        
 
         for col in spec["models"][0]["columns"]:
             schema_col = self.schema_lookup[col["name"]]
             if schema_col is None:
                 logger.warning("Column '%s' not found in schema.json", col["name"])
                 continue
+            
+            # formula
+            if schema_col["dtype"] == "hash_key" and ('stage' in model_name):
+                formula = "MD5(" + ", ".join(self.models_cfg["stage"]["hash_keys"][schema_col["name"]]["columns"]) + ")"
+            elif (schema_col["name"] in self.tech_attrs) and ('stage' in model_name):
+                formula = schema_col["source_name"]
+            else:
+                formula = formula_builder(schema_col)
+
+            # dtype, cast hash keys to text in mart layer
+            if schema_col["dtype"] == "hash_key" and ('mart' in model_name) and (db_dtypes == 'greenplum'):
+                dtype = 'text'.upper()
+            else:
+                dtype = self.get_dtype(schema_col["dtype"], db_dtypes).upper()
+
+            # key
+            if schema_col["name"].endswith("_hash_key") and not schema_col["name"].endswith("_prop_hash_key"):
+                key = "PK"
+            elif schema_col["name"].endswith("_prop_hash_key"):
+                key = "HashDiff"
+            elif schema_col["name"] == 'p_date':
+                key = "PARTITION BY"
+            else:
+                key = ''
+
             attrs.append((
                 schema_col["name"].upper(),
                 schema_col.get("description", ""),
-                self.get_dtype(schema_col["dtype"], db_dtypes).upper(),
-                formula_builder(schema_col) if (formula_builder and schema_col["name"] not in self.tech_attrs)
-                     else schema_col["source_name"],
-                "",
+                dtype,
+                formula,
+                key,
                 schema_col.get("example", ""),
             ))
 

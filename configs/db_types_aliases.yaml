@@ -26,3 +26,7 @@ double:
   hadoop: double
   greenplum: float
   clickhouse: Float64 
+  
+hash_key:
+  greenplum: uuid
+  clickhouse: String
