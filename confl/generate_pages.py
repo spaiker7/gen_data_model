@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from atlassian import Confluence
 
 from data_utils import TemplateGenerator
+from jinja2 import Environment, FileSystemLoader
 
 logger = logging.getLogger(__name__)
 
@@ -19,8 +20,8 @@ class DocumentationGenerator(TemplateGenerator):
         dbt_config_path: str | Path,
         schema_path: str | Path,
         output_dir: str | Path = "confl/pages",
-        dtype_aliases: str | Path = "db_types_aliases.yaml",
-        template_root: str | Path = "."
+        dtype_aliases: str | Path = "configs/db_types_aliases.yaml",
+        template_root: str | Path = "confl/jnj_templates"
     ):
         super().__init__(template_root)
 
@@ -34,6 +35,8 @@ class DocumentationGenerator(TemplateGenerator):
 
         self.paths = self.doc_cfg["paths"]
         self.docs = self.doc_cfg["confluence"]
+        self.models_cfg = self.dbt_cfg["models"]
+        self.templates_path = Path(self.paths["templates"])
 
         self.load_env()
         self.connect()
@@ -44,20 +47,31 @@ class DocumentationGenerator(TemplateGenerator):
         self.add_tech_attrs_to_schema()
         self.schema_lookup = {col["name"]: col for col in self.schema}
 
+        self.env = Environment(
+            loader=FileSystemLoader(template_root),
+            trim_blocks=True,
+            lstrip_blocks=True,
+            keep_trailing_newline=True,
+            variable_start_string="{{",
+            variable_end_string="}}",
+            block_start_string="{%",
+            block_end_string="%}"
+        )
+
     def add_tech_attrs_to_schema(self):
         """
         Append technical attributes from dbt_config to the schema.
         """
-
-        for group in self.dbt_cfg.get("technical_attrs", {}).values():
-            for col in group:
-                self.schema.append({
-                    "name": col["name"],
-                    "source_name": col.get("source_name", ""),
-                    "dtype": col.get("dtype", ""),
-                    "description": col.get("description", ""),
-                    "example": col.get("example", ""),
-                })
+        self.tech_attrs = []
+        for attr in self.dbt_cfg.get("technical_attrs", {}):
+            self.schema.append({
+                "name": attr["name"],
+                "source_name": attr.get("source_name", ""),
+                "dtype": attr.get("dtype", ""),
+                "description": attr.get("description", ""),
+                "example": attr.get("example", ""),
+            })
+            self.tech_attrs.append(attr["name"])
 
     def load_env(self):
 
@@ -105,10 +119,13 @@ class DocumentationGenerator(TemplateGenerator):
 
     def load_specs(self):
         self.specs = {}
+        self.specs_plain = {}
         spec_dir = Path(self.paths["specs"])
         for file in spec_dir.glob("*.yml"):
-
             self.specs[file.stem] = self._load_yaml(file)
+            self.specs_plain[file.stem] = file.read_text(
+                encoding="utf-8"
+            )
 
     def build_context(self, **kwargs):
         return {
@@ -131,10 +148,11 @@ class DocumentationGenerator(TemplateGenerator):
                 logger.warning("Column '%s' not found in schema.json", col["name"])
                 continue
             attrs.append((
-                schema_col["name"],
+                schema_col["name"].upper(),
                 schema_col.get("description", ""),
-                self.get_dtype(schema_col["dtype"], db_dtypes),
-                formula_builder(schema_col) if formula_builder else "",
+                self.get_dtype(schema_col["dtype"], db_dtypes).upper(),
+                formula_builder(schema_col) if (formula_builder and schema_col["name"] not in self.tech_attrs)
+                     else schema_col["source_name"],
                 "",
                 schema_col.get("example", ""),
             ))
@@ -170,13 +188,13 @@ class DocumentationGenerator(TemplateGenerator):
             model_name=self.models_cfg["raw_stage"]["model_name"],
             db_dtypes=page_cfg["db_dtypes"],
             formula_builder=lambda c: 
-                f"<*{page_cfg['extension']}>/{c['source_name']}"
+                f"&lt;*{page_cfg['message_extension']}&gt;/{c['source_name']}"
         )
 
         self.render_publish_page(
             title=page_cfg["title"],
             parent_id=page_cfg["parent_page_id"],
-            template_path=page_cfg["template_path"],
+            template_path= page_cfg["template_path"],
             context=self.build_context(
                 attrs=attrs,
                 **page_cfg
@@ -187,7 +205,7 @@ class DocumentationGenerator(TemplateGenerator):
         page_cfg = self.docs["stage"]
 
         attrs = self.build_attrs(
-            model_name=self.models_cfg["stage"]["model_name"],
+            model_name=self.models_cfg["raw_stage"]["model_name"],
             db_dtypes=page_cfg["db_dtypes"],
             formula_builder=lambda c:
                  f"{self.docs['source']['schema_name']}.{self.docs['source']['table_name']}.{c['name']}".upper()
@@ -198,10 +216,14 @@ class DocumentationGenerator(TemplateGenerator):
             template_path=page_cfg["template_path"],
             context=self.build_context(
                 attrs=attrs,
+                raw_stage_model_name=f"{self.models_cfg["raw_stage"]["model_name"]}.sql",
+                raw_stage_model_spec_name=f"{self.models_cfg["raw_stage"]["model_name"]}.yml",
+                stage_model_name=f"{self.models_cfg["stage"]["model_name"]}.sql",
+                stage_model_spec_name=f"{self.models_cfg["stage"]["model_name"]}.yml",
                 raw_stage_model=self.models.get(self.models_cfg["raw_stage"]["model_name"], ""),
                 stage_model=self.models.get(self.models_cfg["stage"]["model_name"],  ""),
-                raw_stage_model_spec=self.specs.get(self.models_cfg["raw_stage"]["model_name"],{}),
-                stage_model_spec=self.specs.get(self.models_cfg["stage"]["model_name"], {}),
+                raw_stage_model_spec=self.specs_plain.get(self.models_cfg["raw_stage"]["model_name"],{}),
+                stage_model_spec=self.specs_plain.get(self.models_cfg["stage"]["model_name"], {}),
                 **page_cfg
             )
         )
@@ -222,7 +244,9 @@ class DocumentationGenerator(TemplateGenerator):
                 context=self.build_context(
                     attrs=attrs,
                     model=self.models.get(hub["model_name"], {}),
-                    model_spec=self.specs.get(hub["model_name"], {}),
+                    model_spec=self.specs_plain.get(hub["model_name"], {}),
+                    model_name=f"{hub["model_name"]}.sql",
+                    model_spec_name=f"{hub["model_name"]}.sql",
                     **page_cfg
                 )
             )
@@ -243,7 +267,9 @@ class DocumentationGenerator(TemplateGenerator):
                 context=self.build_context(
                     attrs=attrs,
                     model=self.models.get(hsat["model_name"], {}),
-                    model_spec=self.specs.get(hsat["model_name"], {}),
+                    model_spec=self.specs_plain.get(hsat["model_name"], {}),
+                    model_name=f"{hsat["model_name"]}.sql",
+                    model_spec_name=f"{hsat["model_name"]}.sql",
                     **page_cfg
                 )
             )
@@ -263,10 +289,14 @@ class DocumentationGenerator(TemplateGenerator):
                 template_path=page_cfg["template_path"],
                 context=self.build_context(
                     attrs=attrs,
+                    datamart_model_spec_name=f"{mart["model_name"]}.yml",
+                    datamart_model_name=f"{mart["model_name"]}.sql",
+                    export_part2ch_model_name=f"{export["model_name"]}.sql",
+                    export_part2ch_model_spec_name=f"{export["model_name"]}.yml",
                     datamart_model=self.models.get(mart["model_name"], ""),
                     export_part2ch_model=self.models.get(export["model_name"], "") if export else "",
-                    datamart_model_spec=self.specs.get(mart["model_name"], {}),
-                    export_part2ch_model_spec=self.specs.get(export["model_name"], {}) if export else {},
+                    datamart_model_spec=self.specs_plain.get(mart["model_name"], {}),
+                    export_part2ch_model_spec=self.specs_plain.get(export["model_name"], {}) if export else {},
                     **page_cfg
                 )
          
@@ -291,13 +321,13 @@ class DocumentationGenerator(TemplateGenerator):
 
         logger.info("Generating Confluence pages...")
 
-        self.generate_source_page()
-        self.generate_stage_page()
+        # self.generate_source_page()
+        # self.generate_stage_page()
 
         self.generate_hubs()
-        self.generate_hsats()
+        # self.generate_hsats()
 
-        self.generate_marts()
+        # self.generate_marts()
 
         logger.info("Documentation generation completed.")
 
@@ -309,7 +339,7 @@ if __name__ == "__main__":
     )
 
     generator = DocumentationGenerator(
-        doc_config_path="configs/doc_config.yaml",
+        doc_config_path="configs/docs_config.yaml",
         dbt_config_path="configs/dbt_config.yaml",
         schema_path="src/schema.json"
     )

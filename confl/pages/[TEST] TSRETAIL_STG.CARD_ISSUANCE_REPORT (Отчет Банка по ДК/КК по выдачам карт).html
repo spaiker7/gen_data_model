@@ -1,0 +1,61 @@
+<h1>Общая информация</h1>
+<table class="wrapped"><colgroup><col/><col/></colgroup><tbody>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Наименование таблицы</strong></th><td style="text-align: left;vertical-align: top;">TSRETAIL_STG.CARD_ISSUANCE_REPORT</td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Описание</strong></th><td style="text-align: left;vertical-align: top;"><span style="color: rgb(23,43,77);">Отчет Банка по ДК/КК по выдачам карт</span></td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><p><strong title="">Система источник</strong></p></th><td style="text-align: left;vertical-align: top;"><span style="color: rgb(23,43,77);">wd.mtsretail.ru</span></td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Процедура/Процесс загрузки</strong></th><td><div class="content-wrapper"><p><br/></p></div></td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Ссылка на требование</strong></th><td style="text-align: left;vertical-align: top;"><div class="content-wrapper"><p><br/></p></div></td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Регламент обновления</strong></th><td style="text-align: left;vertical-align: top;"><span style="color: rgb(23,43,77);">T-1</span></td></tr>
+    <tr><th class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;"><strong>Глубина хранения</strong></th><td style="text-align: left;vertical-align: top;">2026-05-01</td></tr>
+    <tr><th style="text-align: left;vertical-align: top;"><strong>Jira</strong></th><td style="text-align: left;vertical-align: top;"><div class="content-wrapper"><p><br/></p></div></td></tr>
+</tbody></table>
+<h1>Структура таблицы</h1>
+<ac:structured-macro ac:macro-id="ae1738cf-c9e4-4937-a672-10383b6827ac" ac:name="expand" ac:schema-version="1"><ac:parameter ac:name="title">TSRETAIL_STG.CARD_ISSUANCE_REPORT</ac:parameter><ac:rich-text-body>
+    <table class="wrapped relative-table" style="width: 85%;"><colgroup><col style="width: 4.5%;"/><col style="width: 12%;"/><col style="width: 21%;"/><col style="width: 23%;"/><col style="width: 6%;"/><col style="width: 18%;"/><col style="width: 6%;"/><col style="width: 9.5%;"/>
+    </colgroup><tbody><tr>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Схема данных</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Название таблицы</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Название поля</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Описание поля</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Тип данных</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Формула расчета</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Ключ</th>
+        <th class="highlight-grey" data-highlight-colour="grey" scope="col" style="text-align: center;" title="Цвет фона: ">Пример данных</th>
+    </tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>МЕСЯЦ_ДОГОВОРА</td><td></td><td>timestamp</td><td>&lt;*.xlsx&gt;/МЕСЯЦ ДОГОВОРА</td><td></td><td>2026-06-01 00:00:00</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ДАТА_ДОГОВОРА</td><td></td><td>timestamp</td><td>&lt;*.xlsx&gt;/ДАТА ДОГОВОРА</td><td></td><td>2026-06-03 00:00:00</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>МЕСЯЦ_ОФОРМЛЕНИЯ</td><td></td><td>timestamp</td><td>&lt;*.xlsx&gt;/МЕСЯЦ ОФОРМЛЕНИЯ</td><td></td><td>2026-06-01 00:00:00</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ДАТА_И_ВРЕМЯ_ОФОРМЛЕНИЯ</td><td></td><td>timestamp</td><td>&lt;*.xlsx&gt;/ДАТА И ВРЕМЯ ОФОРМЛЕНИЯ</td><td></td><td>2026-06-03 09:51:00</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>БАНК_(МТСБ,_ЭКСИ)</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/Банк (МТСБ, Экси)</td><td></td><td>Экси Банк</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ТИП_КАРТЫ_(ДК,_КК,_НЦПК,_ВИРТУАЛЬНАЯ_КАРТА)</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/ТИП КАРТЫ (ДК, КК, НЦПК, ВИРТУАЛЬНАЯ КАРТА)</td><td></td><td>ДК Льюис</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>НАИМЕНОВАНИЕ_ПРОДУКТА</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/НАИМЕНОВАНИЕ ПРОДУКТА</td><td></td><td>LIP_MIR Advanced MTS Money</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ФЛАГ_АКТИВАЦИИ_ДЛЯ_РТК</td><td></td><td>tinyint</td><td>&lt;*.xlsx&gt;/ФЛАГ АКТИВАЦИИ ДЛЯ РТК</td><td></td><td>1</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ИНФРАСТРУКТУРНЫЙ_ПЛАТЁЖ</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/ИНФРАСТРУКТУРНЫЙ ПЛАТЁЖ</td><td></td><td></td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ФЛАГ_АКТИВАЦИИ_БАНКА</td><td></td><td>tinyint</td><td>&lt;*.xlsx&gt;/ФЛАГ АКТИВАЦИИ БАНКА</td><td></td><td>1</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>КОД_ТОЧКИ_ПРОДАЖ_РТК</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/КОД ТОЧКИ ПРОДАЖ РТК</td><td></td><td>D993</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ШТРИХКОД_КАРТЫ</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/ШТРИХКОД КАРТЫ</td><td></td><td>C$L1497491232$LM</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ФИО_СОТРУДНИКА_ВЫДАВШЕГО_КАРТУ</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/ФИО СОТРУДНИКА ВЫДАВШЕГО КАРТУ</td><td></td><td>Азизова Айсель Афласовна</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>НОМЕР_ДОГОВОРА_(ЗАЯВКИ)</td><td></td><td>bigint</td><td>&lt;*.xlsx&gt;/НОМЕР ДОГОВОРА (ЗАЯВКИ)</td><td></td><td>500003946468</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>НОМЕР_ДОГОВОРА_БАНКА</td><td></td><td>bigint</td><td>&lt;*.xlsx&gt;/НОМЕР ДОГОВОРА БАНКА</td><td></td><td>100034133463</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>КАНАЛ_ЗАЯВКИ_РТК</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/КАНАЛ ЗАЯВКИ РТК</td><td></td><td>РТК</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>СУММА_ТРАНЗАКЦИЙ_С_ДАТЫ_ВЫДАЧИ_90/60_ДНЕЙ</td><td></td><td>double</td><td>&lt;*.xlsx&gt;/СУММА ТРАНЗАКЦИЙ С ДАТЫ ВЫДАЧИ 90/60 ДНЕЙ</td><td></td><td>825.95</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ДАТА_ПЕРВОЙ_РАСХОДНОЙ_ТРАНЗАКЦИИ</td><td></td><td>timestamp</td><td>&lt;*.xlsx&gt;/ДАТА ПЕРВОЙ РАСХОДНОЙ ТРАНЗАКЦИИ</td><td></td><td>2026-06-03 00:00:00</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>СУММА_ПЕРВОЙ_РАСХОДНОЙ_ОПЕРАЦИИ</td><td></td><td>smallint</td><td>&lt;*.xlsx&gt;/СУММА ПЕРВОЙ РАСХОДНОЙ ОПЕРАЦИИ</td><td></td><td>500</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ДАТА_ЗАКРЫТИЯ_КАРТЫ</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/ДАТА ЗАКРЫТИЯ КАРТЫ</td><td></td><td></td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>СНЯТИЕ_НАЛИЧНЫХ_КК</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/СНЯТИЕ НАЛИЧНЫХ КК</td><td></td><td></td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>КОД_ПРОДУКТА</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/КОД ПРОДУКТА</td><td></td><td>LIP_MIR Advanced MTS Money</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ОДОБРЕНИЕ_ПО_ЗАЯВКЕ</td><td></td><td>tinyint</td><td>&lt;*.xlsx&gt;/ОДОБРЕНИЕ ПО ЗАЯВКЕ</td><td></td><td>1</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>НОМЕР_ЗАЯВКИ_В_РТК</td><td></td><td>int</td><td>&lt;*.xlsx&gt;/НОМЕР ЗАЯВКИ В РТК</td><td></td><td>42355381</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>АДРЕС_ТТ</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/АДРЕС ТТ</td><td></td><td>628403, Ханты-Мансийский Автономный округ - Югра АО, Сургут г, Югорский тракт, 38</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ОДОБРЕННЫЙ_КРЕДИТ</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/ОДОБРЕННЫЙ КРЕДИТ</td><td></td><td></td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>АНКЕТА</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/АНКЕТА</td><td></td><td></td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ТЕХНОЛОГИЯ_ПОДПИСАНИЯ_(ББ_И_БУМАГА)</td><td></td><td>tinyint</td><td>&lt;*.xlsx&gt;/ТЕХНОЛОГИЯ ПОДПИСАНИЯ (ББ И БУМАГА)</td><td></td><td>1</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ДАТА_ПЕРВОГО_ВХОДА_В_ДБО</td><td></td><td>timestamp</td><td>&lt;*.xlsx&gt;/ДАТА ПЕРВОГО ВХОДА В ДБО</td><td></td><td>2026-06-03 00:00:00</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ВОЗВРАТ</td><td></td><td>tinyint</td><td>&lt;*.xlsx&gt;/ВОЗВРАТ</td><td></td><td>0</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>СТАТУС_ЗАЯВКИ</td><td></td><td>string</td><td>&lt;*.xlsx&gt;/СТАТУС ЗАЯВКИ</td><td></td><td>Завершена</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>ДАТА_И_ВРЕМЯ_ПОЛУЧЕНИЯ_КОНЕЧНОГО_СТАТУСА_ОТ_БАНКА</td><td></td><td>timestamp</td><td>&lt;*.xlsx&gt;/ДАТА И ВРЕМЯ ПОЛУЧЕНИЯ КОНЕЧНОГО СТАТУСА ОТ БАНКА</td><td></td><td>2026-06-03 10:04:00</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>source</td><td>Источник данных</td><td>string</td><td>&lt;*.xlsx&gt;/</td><td></td><td></td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>doc_id</td><td>Идентификатор документа</td><td>string</td><td>&lt;*.xlsx&gt;/tech_stg.xml_archive</td><td></td><td>17816007320693</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>batch_id</td><td>Идентификатор пачки, в которой загружен документ</td><td>string</td><td>&lt;*.xlsx&gt;/tech_stg.xml_archive</td><td></td><td>17816007320693</td></tr>
+    <tr><td>TSRETAIL_STG</td><td>CARD_ISSUANCE_REPORT</td><td>load_date</td><td>Дата и время создания записи</td><td>timestamp</td><td>&lt;*.xlsx&gt;/now()</td><td></td><td>2026-01-01</td></tr>
+    </tbody></table></ac:rich-text-body></ac:structured-macro>

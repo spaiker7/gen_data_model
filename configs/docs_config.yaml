@@ -2,14 +2,14 @@ paths:
   output: confl/pages
   models: dbt/models
   specs: dbt/spec
-  templates: confl/jnj_templates/templates
+  templates: confl/jnj_templates
 
 confluence:
   source: # stage hadoop
-    title: TSRETAIL_STG.CARD_ISSUANCE_REPORT (Отчет Банка по ДК/КК по выдачам карт)
+    title: '[TEST] TSRETAIL_STG.CARD_ISSUANCE_REPORT (Отчет Банка по ДК/КК по выдачам карт)'
     table_desc: Отчет Банка по ДК/КК по выдачам карт
     template_path: hadoop/stg_hdp_page_jnj_template.html
-    parent_page_id: 123456
+    parent_page_id: 2182845903
     update_schedule: T-1
     history_depth: 2026-05-01
     archive_schema_table_name: tech_stg.xml_archive
@@ -21,10 +21,10 @@ confluence:
 
   stage:  # stage greenplum
     model_name: raw_stage_card_issuance_detailed
-    title: STG.CARD_ISSUANCE_REPORT (Отчет Банка по ДК/КК по выдачам карт)
+    title: '[TEST] STG.CARD_ISSUANCE_REPORT (Отчет Банка по ДК/КК по выдачам карт)'
     table_desc: Отчет Банка по ДК/КК по выдачам карт
     template_path: greenplum/stg_gp_page_jnj_template.html
-    parent_page_id: 123456
+    parent_page_id: 2182845903
     update_schedule: T-1
     history_depth: 2026-05-01
     schema_name: STG
@@ -33,10 +33,10 @@ confluence:
 
   hubs:
     - model_name: hub_card_issuance_detailed
-      title: DV.HUB_CARD_ISSUANCE_REPORT (Хаб фактов по выдачам карт от банка)
+      title: '[TEST] DV.HUB_CARD_ISSUANCE_REPORT (Хаб фактов по выдачам карт от банка)'
       table_desc: Отчет Банка по ДК/КК по выдачам карт
       template_path: greenplum/raw_vault_gp_page_jnj_template.html
-      parent_page_id: 123456
+      parent_page_id: 2182845903
       update_schedule: T-1
       history_depth: 2026-05-01
       schema_name: DV
@@ -45,10 +45,10 @@ confluence:
 
   hsats:
     - model_name: hsat_card_issuance_detailed
-      title: DV.HSAT_CARD_ISSUANCE_REPORT (Сателлит фактов по выдачам карт от банка)
+      title: '[TEST] DV.HSAT_CARD_ISSUANCE_REPORT (Сателлит фактов по выдачам карт от банка)'
       table_desc: Отчет Банка по ДК/КК по выдачам карт
       template_path: greenplum/raw_vault_gp_page_jnj_template.html
-      parent_page_id: 123456
+      parent_page_id: 2182845903
       update_schedule: T-1
       history_depth: 2026-05-01
       schema_name: DV
@@ -57,10 +57,10 @@ confluence:
 
   base_marts:
     - model_name: mart_card_issuance_detailed
-      title: DM.DM.CARD_ISSUANCE_REPORT (Отчет Банка по ДК/КК по выдачам карт)'
+      title: '[TEST] DM.DM.CARD_ISSUANCE_REPORT (Отчет Банка по ДК/КК по выдачам карт)'
       table_desc: Отчет Банка по ДК/КК по выдачам карт
       template_path: greenplum/raw_vault_gp_page_jnj_template.html
-      parent_page_id: 123456
+      parent_page_id: 2182845903
       update_schedule: T-1
       history_depth: 2026-05-01
       schema_name: DM
@@ -69,10 +69,10 @@ confluence:
 
   marts: # clickhouse
     - model_name: mart_card_issuance_detailed
-      title: DEFAULT.HSAT_CARD_ISSUANCE_REPORT (Отчет Банка по ДК/КК по выдачам карт)'
+      title: '[TEST] DEFAULT.HSAT_CARD_ISSUANCE_REPORT (Отчет Банка по ДК/КК по выдачам карт)'
       table_desc: Отчет Банка по ДК/КК по выдачам карт
       template_path: clickhouse/raw_vault_gp_page_jnj_template.html
-      parent_page_id: 123456
+      parent_page_id: 2182845903
       update_schedule: T-1
       history_depth: 2026-05-01
       schema_name: DEFAULT
