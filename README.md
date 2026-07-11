@@ -5,7 +5,7 @@ Generate an entire Data Warehouse skeleton from a single sample data file using 
 This project automatically creates:
 - data profiling & schema inference from your data sample (`schema.json`)
 - dbt models (Stage → Raw Vault → Data Marts → Export)
-- dbt model specifications (`schema.yml`)
+- dbt model specifications (`model_spec.yml`)
 - confluence documentation (HTML + automatic publishing)
 
 The goal is to reduce repetitive work when onboarding a new source system while keeping documentation and implementation synchronized.
@@ -13,13 +13,37 @@ The goal is to reduce repetitive work when onboarding a new source system while 
 ## Pipeline
 
 ### 1. Schema sample
+<b>src/profiler.py</b>
 
 Input:
-
 - sample CSV/XLSX (`your_sample.{csv, xlsx}`)
 - mapping file (`your_mapping.{csv, xlsx}`) <br>
-  Should contain source attribute name (src_name) from sample, target attribute name (name) and its description.
-Output: `src/schema.json`
+  Should contain source attribute name (src_name) from sample, target attribute name and its description.
+  
+Output:
+<details>
+<summary><b>schema.json</b></summary>
+  
+```json
+[
+  {
+    "name": "transaction_date",
+    "source_name": "trans_dt",
+    "dtype": "timestamp",
+    "description": "",
+    "example": "2026-06-01 00:00:00"
+  },
+  {
+    "name": "contract_date",
+    "source_name": "contract_dt",
+    "dtype": "timestamp",
+    "description": "",
+    "example": "2026-06-03 00:00:00"
+  }
+] 
+```
+  
+</details>
 
 The schema contains
 - target name
@@ -31,6 +55,7 @@ The schema contains
 Additional metadata technical columns and generated hash keys should be provided in `dbt_config.yaml`. They are automatically appended to the models and published pages during generation.
 
 ### 2. DBT models
+<b>dbt/generate_models.py</b>
 
 Input:
 - `src/schema.json`
@@ -39,7 +64,27 @@ Input:
 Output: (`dbt/models/`) <br>
 For every generated model a corresponding specification is created automatically based on `dbt/templates/specs/model_spec.yml`.
 
+<details>
+<summary><b>model_spec.yml</b></summary>
+  
+```yml
+version: 2
+
+models:
+  - name: [[ model_name ]]
+    description: "[[ model_description ]]"
+
+    columns:
+<% for col in columns %>
+      - name: [[ col.name ]]
+        description: "[[ col.description ]]"
+<% endfor %>
+```
+  
+</details>
+
 ### 3. Documentation
+<b>confl/generate_pages.py</b>
 
 Input: <br>
 - generated models `dbt/models/*.sql`
