@@ -16,8 +16,8 @@ The goal is to reduce repetitive work when onboarding a new source system while 
 <b>src/profiler.py</b>
 
 Input:
-- sample CSV/XLSX (`your_sample.{csv, xlsx}`)
-- mapping file (`your_mapping.{csv, xlsx}`) <br>
+- sample CSV/XLSX (`src/sample/your_sample.{csv, xlsx}`)
+- mapping file (`src/mapping/your_mapping.{csv, xlsx}`) <br>
   Should contain source attribute name (src_name) from sample, target attribute name and its description.
   
 Output:
